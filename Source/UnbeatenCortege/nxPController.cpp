@@ -86,7 +86,7 @@ void AnxPController::proceedFire()
 	FHitResult hit;
 	start = WorldLocation;
 	end = WorldLocation + WorldDirection * 10000;
-	end.X -= 200;
+	end.X -= 100;
 	FCollisionObjectQueryParams objParams(FCollisionObjectQueryParams::InitType::AllStaticObjects);
 	if (GetWorld()->LineTraceSingleByObjectType(hit, start, end, objParams))
 	{

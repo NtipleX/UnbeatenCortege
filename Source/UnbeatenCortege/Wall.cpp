@@ -2,6 +2,8 @@
 #include "Materials/Material.h"
 #include "TraceHelpers.h"
 #include "Components/BoxComponent.h"
+#include "Sound/SoundCue.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 UWall::UWall() : m_health(2.f)
@@ -46,6 +48,7 @@ void UWall::GetDamage()
 {
 	if (!--m_health)
 	{
+		UGameplayStatics::PlaySound2D(GetWorld(), destroySound);
 		SetHiddenInGame(true);
 		wallBox->SetHiddenInGame(true);
 		wallBox->SetCollisionEnabled(ECollisionEnabled::NoCollision);
@@ -54,6 +57,7 @@ void UWall::GetDamage()
 	else
 	{
 		SetMaterial(0, darkenMaterial);
+		UGameplayStatics::PlaySound2D(GetWorld(), hitSound);
 	}
 }
 

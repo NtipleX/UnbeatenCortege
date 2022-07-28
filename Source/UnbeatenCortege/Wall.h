@@ -27,6 +27,11 @@ private:
 	UPROPERTY(EditDefaultsOnly)
 	class UBoxComponent* wallBox;
 
+	UPROPERTY(EditDefaultsOnly)
+	class USoundCue* hitSound;
+	UPROPERTY(EditDefaultsOnly)
+	USoundCue* destroySound;
+
 	float m_health;
 
 };

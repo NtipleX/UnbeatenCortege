@@ -1,7 +1,8 @@
 #include "Barricade.h"
+#include "TraceHelpers.h"
 
 // Sets default values
-ABarricade::ABarricade()
+ABarricade::ABarricade(): m_isDamaged (false), m_debris(nullptr)
 {
 	PrimaryActorTick.bCanEverTick = false;
 	root = CreateDefaultSubobject<USceneComponent>(TEXT("rootComp"));
@@ -33,13 +34,33 @@ void ABarricade::BeginPlay()
 void ABarricade::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	if (block1->GetHealth() + block2->GetHealth() + block3->GetHealth() + block4->GetHealth() <= 2)
-	{
-		Destroy();
-	}
 }
 
 float ABarricade::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
 {
+
+	if (block1->GetHealth() + block2->GetHealth() + block3->GetHealth() + block4->GetHealth() <= 2)
+	{
+		Destroy();
+		return 0;
+	}
+	
+	if (!m_isDamaged)
+	{
+		if(!block1->GetHealth() || !block2->GetHealth() || !block3->GetHealth() || !block4->GetHealth())
+		{
+			m_debris = GetWorld()->SpawnActor<AActor>(debris, GetActorLocation(), FRotator(0,0,0));
+			m_isDamaged = true;
+		}
+
+	}
+
 	return 0;
+}
+
+void ABarricade::Destroyed()
+{
+	if(m_debris)
+		m_debris->Destroy();
+	Super::Destroyed();
 }
