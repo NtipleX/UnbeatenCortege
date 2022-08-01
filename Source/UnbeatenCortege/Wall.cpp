@@ -56,7 +56,13 @@ void UWall::GetDamage()
 	}
 	else
 	{
-		SetMaterial(0, darkenMaterial);
+		//SetMaterial(0, darkenMaterial);
+		if(Cast<UMaterialInstanceDynamic>(GetMaterial(0)))
+			Cast<UMaterialInstanceDynamic>(GetMaterial(0))->SetScalarParameterValue(FName("Health"), 0.4f);
+		else
+			cLog("its not mateialInstanceDynamic..");
+		
+
 		UGameplayStatics::PlaySound2D(GetWorld(), hitSound);
 	}
 }

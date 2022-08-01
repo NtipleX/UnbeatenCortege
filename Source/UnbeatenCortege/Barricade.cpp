@@ -27,7 +27,11 @@ ABarricade::ABarricade(): m_isDamaged (false), m_debris(nullptr)
 void ABarricade::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+	block1->SetMaterial(0, block1->CreateDynamicMaterialInstance(0, matInstance));
+	block2->SetMaterial(0, block2->CreateDynamicMaterialInstance(0, matInstance));
+	block3->SetMaterial(0, block3->CreateDynamicMaterialInstance(0, matInstance));
+	block4->SetMaterial(0, block4->CreateDynamicMaterialInstance(0, matInstance));
 }
 
 // Called every frame

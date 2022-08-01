@@ -11,6 +11,10 @@ class UNBEATENCORTEGE_API ABarricade : public AActor
 	GENERATED_BODY()
 	
 public:	
+
+	UPROPERTY(EditDefaultsOnly, category = nx)
+	UMaterialInstance* matInstance;
+
 	ABarricade();
 	UPROPERTY(EditDefaultsOnly)
 	USceneComponent* root;

@@ -24,6 +24,9 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = nx, meta = (AllowPrivateAccess = true))
 	UMaterial* darkenMaterial;
 
+	UPROPERTY(EditDefaultsOnly, Category = nx)
+	UMaterialInstanceDynamic* material;
+
 	UPROPERTY(EditDefaultsOnly)
 	class UBoxComponent* wallBox;
 
