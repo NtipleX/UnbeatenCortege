@@ -36,12 +36,12 @@ AnxProjectile::AnxProjectile() : damage(10.f)
 	projMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	projMesh->SetCollisionObjectType(ECollisionChannel::ECC_WorldDynamic);
 	projMesh->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
-	projBox->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
+	projBox->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
 	projBox->SetCollisionObjectType(ECollisionChannel::ECC_WorldDynamic);
 	projBox->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
 	projBox->SetCollisionResponseToChannel(ECollisionChannel::ECC_WorldStatic, ECollisionResponse::ECR_Overlap);
 	projBox->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Overlap);
-	projBox->SetCollisionResponseToChannel(ECollisionChannel::ECC_WorldStatic, ECollisionResponse::ECR_Overlap);
+	projBox->SetCollisionResponseToChannel(ECollisionChannel::ECC_WorldDynamic, ECollisionResponse::ECR_Overlap);
 	FScriptDelegate deleg;
 	deleg.BindUFunction(this, "projectileHit");
 	projBox->OnComponentBeginOverlap.Add(deleg);
@@ -64,6 +64,7 @@ void AnxProjectile::projectileHit(UPrimitiveComponent* OverlappedComponent, AAct
 	float time = GetGameTimeSinceCreation();
 	if (IsPendingKill())
 		return;
+	sLog(OtherActor->GetName());
 	auto unit = Cast<AnxHero>(OtherActor);
 	if(unit && unit->isEnemy || Cast<UWall>(OtherComp))
 	{
@@ -73,6 +74,13 @@ void AnxProjectile::projectileHit(UPrimitiveComponent* OverlappedComponent, AAct
 			Cast<UWall>(OtherComp)->GetDamage();
 		}
 		OtherActor->TakeDamage(damage, FDamageEvent(), UGameplayStatics::GetPlayerController(GetWorld(), 0), this);
+		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), explosion, GetActorLocation());
+		projMesh->SetHiddenInGame(true);
+		projParticle->DeactivateSystem();
+		MarkPendingKill();
+	}
+	else if (!unit)
+	{
 		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), explosion, GetActorLocation());
 		projMesh->SetHiddenInGame(true);
 		projParticle->DeactivateSystem();
