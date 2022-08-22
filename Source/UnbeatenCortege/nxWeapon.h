@@ -12,7 +12,7 @@ class UNBEATENCORTEGE_API AnxWeapon : public AActor
 	
 public:	
 	AnxWeapon();
-	void fireWeapon(FVector direction);
+	void fireWeapon(FVector direction, FVector startPos);
 
 protected:
 	virtual void BeginPlay() override;

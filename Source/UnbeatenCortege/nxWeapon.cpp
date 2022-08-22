@@ -29,19 +29,19 @@ void AnxWeapon::Tick(float DeltaTime)
 
 }
 
-void AnxWeapon::fireWeapon(FVector direction)
+void AnxWeapon::fireWeapon(FVector direction, FVector startPos)
 {
 	if(GetWorldTimerManager().GetTimerRemaining(m_timer_reload)>0.1) return;
 	
 	GetWorldTimerManager().SetTimer(m_timer_reload, reloadTime, false, reloadTime);
 	/// Shoot by direction
-	FVector start = GetActorLocation();
-	start.Z -= 20;
+	FVector start = startPos;//GetActorLocation();
+	start.Z -= 52;
 	//lDraw(start, start + direction);
 	if (projectile)
 	{
 		FVector2D A1{ start + direction };
-		A1 -= FVector2D{ GetActorLocation() };
+		A1 -= FVector2D{ startPos };
 		float sina = A1.Y / A1.Size();
 		auto degrees = FMath::Acos(sina) * 57.296 * -1*FMath::Sign(A1.X);
 		FRotator rot(0, degrees, 0 );

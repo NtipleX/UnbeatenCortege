@@ -119,7 +119,7 @@ void AnxHero::fireWeapon(FVector pointOnMap)
 	FVector vectorDirection = pointOnMap - start;
 	if (m_gun)
 	{
-		m_gun->fireWeapon(vectorDirection);
+		m_gun->fireWeapon(vectorDirection, GetActorLocation());
 	}
 }
 
