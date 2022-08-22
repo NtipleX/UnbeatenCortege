@@ -58,7 +58,7 @@ void UWall::GetDamage()
 	{
 		//SetMaterial(0, darkenMaterial);
 		if(Cast<UMaterialInstanceDynamic>(GetMaterial(0)))
-			Cast<UMaterialInstanceDynamic>(GetMaterial(0))->SetScalarParameterValue(FName("Health"), 0.4f);
+			Cast<UMaterialInstanceDynamic>(GetMaterial(0))->SetScalarParameterValue(FName("Health"), 0.5f);
 		else
 			cLog("its not mateialInstanceDynamic..");
 		

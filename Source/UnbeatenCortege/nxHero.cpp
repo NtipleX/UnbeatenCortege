@@ -61,8 +61,8 @@ void AnxHero::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 	if (m_moveForward && m_moveSide)
 	{
-		m_moveForward /= 1.77;
-		m_moveSide /= 1.77;
+		m_moveForward /= 1.7;
+		m_moveSide /= 1.7;
 	}
 	AddMovementInput(FVector(m_moveForward, m_moveSide, 0), fabs(m_moveForward) + fabs(m_moveSide), false);
 }

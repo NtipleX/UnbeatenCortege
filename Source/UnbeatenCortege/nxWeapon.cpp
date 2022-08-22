@@ -36,7 +36,7 @@ void AnxWeapon::fireWeapon(FVector direction)
 	GetWorldTimerManager().SetTimer(m_timer_reload, reloadTime, false, reloadTime);
 	/// Shoot by direction
 	FVector start = GetActorLocation();
-	start.Z -= 5;
+	start.Z -= 20;
 	//lDraw(start, start + direction);
 	if (projectile)
 	{
