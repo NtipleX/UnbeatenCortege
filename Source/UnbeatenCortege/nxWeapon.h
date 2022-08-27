@@ -29,6 +29,12 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = nx)
 	float reloadTime;
 
+	UPROPERTY(EditDefaultsOnly, Category = nx)
+	class USoundCue* SoundFire;
+
+	UPROPERTY(EditDefaultsOnly, Category = nx)
+	class UParticleSystem* ParticleFire;
+
 	FTimerHandle m_timer_reload;
 
 };

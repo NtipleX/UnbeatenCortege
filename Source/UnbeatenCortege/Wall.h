@@ -13,7 +13,7 @@ class UNBEATENCORTEGE_API UWall : public UStaticMeshComponent
 public:	
 	UWall();
 	void GetDamage();
-	FORCEINLINE float GetHealth() const;
+	float GetHealth() const;
 
 protected:
 	//virtual void BeginPlay() override;
