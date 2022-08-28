@@ -32,6 +32,13 @@ private:
 	UPROPERTY(EditDefaultsOnly)
 	class UBoxComponent* projBox;
 
+	UPROPERTY(EditDefaultsOnly)
+	class USoundCue* SoundNormalHit;
+	UPROPERTY(EditDefaultsOnly)
+	class USoundCue* SoundNormalHit2;
+	UPROPERTY(EditDefaultsOnly)
+	class USoundCue* SoundNormalHit3;
+
 	UPROPERTY(EditDefaultsOnly, Category = nx)
 	class UParticleSystem* explosion; 
 	UPROPERTY(EditDefaultsOnly, Category = nx)

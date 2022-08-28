@@ -2,6 +2,9 @@
 #include "Components/StaticMeshComponent.h"
 #include "nxHero.h"
 #include "nxProjectile.h"
+#include "Sound/SoundCue.h"
+#include "Kismet/GameplayStatics.h"
+#include "Particles/ParticleSystem.h"
 
 AnxWeapon::AnxWeapon() : reloadTime(1.f)
 {
@@ -36,10 +39,12 @@ void AnxWeapon::fireWeapon(FVector direction, FVector startPos)
 	GetWorldTimerManager().SetTimer(m_timer_reload, reloadTime, false, reloadTime);
 	/// Shoot by direction
 	FVector start = startPos;//GetActorLocation();
-	start.Z -= 52;
+	start.Z -= 10;
 	//lDraw(start, start + direction);
 	if (projectile)
 	{
+		UGameplayStatics::PlaySound2D(GetWorld(), SoundFire);
+		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ParticleFire, GetActorLocation());
 		FVector2D A1{ start + direction };
 		A1 -= FVector2D{ startPos };
 		float sina = A1.Y / A1.Size();

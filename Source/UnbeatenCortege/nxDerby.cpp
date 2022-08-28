@@ -13,7 +13,6 @@ AnxDerby::AnxDerby() : debryStrenght(0.f)
 	debryMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	debryMesh->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
 	debryMesh->SetCollisionObjectType(ECollisionChannel::ECC_Visibility);
-	debryMesh->SetMassScale(FName(), 0.f);
 }
 
 void AnxDerby::BeginPlay()

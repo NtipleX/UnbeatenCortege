@@ -21,7 +21,7 @@ public:
 
 	/* @brief getHeroHealth - returns hero health */
 	UFUNCTION(BlueprintCallable)
-	FORCEINLINE float getHeroHealth() const;
+	float getHeroHealth() const;
 
 	bool isEnemy;
 
