@@ -3,7 +3,8 @@
 AEnemySoldier::AEnemySoldier()
 {
 	PrimaryActorTick.bCanEverTick = true;
-
+	offensivity.Level = 1;
+	offensivity.Experience = 0;
 }
 
 void AEnemySoldier::BeginPlay()

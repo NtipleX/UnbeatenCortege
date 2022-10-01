@@ -23,7 +23,7 @@ UWall::UWall() : m_health(2.f)
 	wallBox->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
 	wallBox->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
 	wallBox->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Block);
-
+	wallBox->SetCanEverAffectNavigation(false);
 }
 
 
