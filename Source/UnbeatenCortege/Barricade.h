@@ -29,6 +29,9 @@ public:
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<AActor> debris;
 
+	UPROPERTY(EditDefaultsOnly)
+	class UBoxComponent* origin;
+
 protected:
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;

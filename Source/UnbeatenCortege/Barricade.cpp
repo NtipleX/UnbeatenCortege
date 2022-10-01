@@ -1,5 +1,6 @@
 #include "Barricade.h"
 #include "TraceHelpers.h"
+#include "Components/BoxComponent.h"
 
 // Sets default values
 ABarricade::ABarricade(): m_isDamaged (false), m_debris(nullptr)
@@ -20,6 +21,11 @@ ABarricade::ABarricade(): m_isDamaged (false), m_debris(nullptr)
 	block3->SetRelativeLocation(FVector::ZeroVector);
 	block4->SetRelativeLocation(FVector::ZeroVector);
 
+	origin = CreateDefaultSubobject<UBoxComponent>(TEXT("Origin"));
+	origin->SetupAttachment(root);
+	origin->SetRelativeLocation(FVector::ZeroVector);
+	origin->SetWorldScale3D(FVector(0.1, 0.1, 0.5));
+	origin->SetCanEverAffectNavigation(true);
 
 }
 
