@@ -3,10 +3,11 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "TraceHelpers.h"
+#include "GenericTeamAgentInterface.h"
 #include "nxHero.generated.h"
 
 UCLASS()
-class UNBEATENCORTEGE_API AnxHero : public ACharacter
+class UNBEATENCORTEGE_API AnxHero : public ACharacter, public IGenericTeamAgentInterface
 {
 	GENERATED_BODY()
 
@@ -16,7 +17,7 @@ public:
 
 	// Shoot to point
 	void fireWeapon(FVector pointOnMap);
-
+	virtual FGenericTeamId GetGenericTeamId() const override;
 public:
 
 	/* @brief getHeroHealth - returns hero health */

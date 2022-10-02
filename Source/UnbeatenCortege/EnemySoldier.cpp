@@ -25,3 +25,7 @@ void AEnemySoldier::SetupPlayerInputComponent(UInputComponent* PlayerInputCompon
 
 }
 
+FGenericTeamId AEnemySoldier::GetGenericTeamId() const
+{
+	return FGenericTeamId(2);
+}
