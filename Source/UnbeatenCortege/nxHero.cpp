@@ -127,3 +127,8 @@ float AnxHero::getHeroHealth() const
 {
 	return heroHealth;
 }
+
+FGenericTeamId AnxHero::GetGenericTeamId() const
+{
+	return FGenericTeamId(1);
+}
