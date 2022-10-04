@@ -24,6 +24,9 @@ class UNBEATENCORTEGE_API AEnemySoldier : public ACharacter, public IGenericTeam
 public:
 	AEnemySoldier();
 
+	UFUNCTION(BlueprintCallable)
+	FRotator fireWeaponBasic(FVector point);
+
 
 public: // virtual
 	virtual void BeginPlay() override;
