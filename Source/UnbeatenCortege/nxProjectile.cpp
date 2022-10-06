@@ -62,9 +62,9 @@ void AnxProjectile::Tick(float DeltaTime)
 
 void AnxProjectile::projectileHit(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	float time = GetGameTimeSinceCreation();
-	if (IsPendingKill())
+	if (IsPendingKill() || OtherActor->ActorHasTag(FName("Invisible")))
 		return;
+
 	
 	auto unit = Cast<AnxHero>(OtherActor);
 	if(unit && unit->isEnemy || Cast<UWall>(OtherComp) && !Cast<AMetalBarricade>(OtherActor))

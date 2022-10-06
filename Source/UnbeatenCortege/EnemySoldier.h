@@ -27,6 +27,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	FRotator fireWeaponBasic(FVector point);
 
+	UFUNCTION(BlueprintCallable)
+	float rotateToPoint(FVector target);
+
 
 public: // virtual
 	virtual void BeginPlay() override;
