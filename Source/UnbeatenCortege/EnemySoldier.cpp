@@ -1,8 +1,10 @@
 #include "EnemySoldier.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "Components/WidgetComponent.h"
+#include "TraceHelpers.h"
 
-AEnemySoldier::AEnemySoldier()
+AEnemySoldier::AEnemySoldier() : heroHealth(100.f)
 {
 	PrimaryActorTick.bCanEverTick = true;
 	offensivity.Level = 1;
@@ -10,12 +12,23 @@ AEnemySoldier::AEnemySoldier()
 	bUseControllerRotationYaw = false;
 	GetCharacterMovement()->bOrientRotationToMovement = true;
 	GetCharacterMovement()->bUseControllerDesiredRotation = true;
+	heroHealthbar = CreateDefaultSubobject<UWidgetComponent>(TEXT("HeroWidgetComp"));
+	heroHealthbar->SetupAttachment(RootComponent);
+	heroHealthbar->SetRelativeLocation(FVector(0, 0, 100));
+	heroHealthbar->SetWidgetSpace(EWidgetSpace::Screen);
+	heroHealthbar->SetDrawSize(FVector2D(60, 10));
+	heroHealthbar->SetVisibility(false, false);
+	SetCanBeDamaged(true);
 }
 
 void AEnemySoldier::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	if (weapon)
+	{
+		m_gun = GetWorld()->SpawnActor<AnxWeapon>(weapon, FTransform());
+		m_gun->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, FName("SKT_Pistol"));
+	}
 }
 
 void AEnemySoldier::Tick(float DeltaTime)
@@ -61,3 +74,37 @@ float AEnemySoldier::rotateToPoint(FVector target)
 	return UEDegree;
 	
 }
+
+void AEnemySoldier::fireWeapon()
+{
+	GetWorld()->SpawnActor<AActor>(ammoOverride.Get(), GetActorLocation(), GetActorRotation(), FActorSpawnParameters());
+}
+
+float 	AEnemySoldier::TakeDamage
+(
+	float DamageAmount,
+	FDamageEvent const& DamageEvent,
+	AController* EventInstigator,
+	AActor* DamageCauser
+)
+{
+	heroHealth -= DamageAmount;
+
+	if (heroHealth <= 0)
+	{
+		Destroy();
+	}
+
+	if (heroHealth <= 90)
+		heroHealthbar->SetVisibility(true, true);
+
+	return Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
+}
+
+void AEnemySoldier::Destroyed()
+{
+	if(m_gun)
+		m_gun->Destroy();
+	Super::Destroyed();
+}
+

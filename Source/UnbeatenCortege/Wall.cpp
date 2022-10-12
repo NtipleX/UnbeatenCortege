@@ -15,7 +15,7 @@ UWall::UWall() : m_health(2.f)
 	*/
 	wallBox = CreateDefaultSubobject<UBoxComponent>(TEXT("wallBox"));
 	wallBox->SetupAttachment(this);
-	wallBox->SetRelativeLocation(FVector::ZeroVector);
+	wallBox->SetRelativeLocation(FVector(0,0,-50));
 
 	SetCollisionObjectType(ECollisionChannel::ECC_WorldDynamic);
 	SetCollisionResponseToChannels(ECR_Block);

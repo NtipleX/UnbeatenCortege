@@ -3,6 +3,8 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "GenericTeamAgentInterface.h"
+#include "nxWeapon.h"
+#include "nxProjectile.h"
 #include "EnemySoldier.generated.h"
 
 USTRUCT(BlueprintType)
@@ -30,16 +32,37 @@ public:
 	UFUNCTION(BlueprintCallable)
 	float rotateToPoint(FVector target);
 
+	UFUNCTION(BlueprintCallable)
+	void fireWeapon();
+
 
 public: // virtual
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	virtual FGenericTeamId GetGenericTeamId() const override;
+	virtual float TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
+	virtual void Destroyed() override;
 
 
 public:	// properties
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	FOffensivity offensivity;
+
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<AnxWeapon> weapon;
+
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<AnxProjectile> ammoOverride;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = nx, meta = (AllowPrivateAccess = true))
+	class UWidgetComponent* heroHealthbar;
+
+private:
+	UPROPERTY()
+	AnxWeapon* m_gun;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = nx, meta = (AllowPrivateAccess = true))
+	float heroHealth;
 
 };
