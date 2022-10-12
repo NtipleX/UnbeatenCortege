@@ -8,6 +8,8 @@
 #include "nxHero.h"
 #include "MetalBarricade.h"
 #include "Sound/SoundCue.h"
+#include "EnemySoldier.h"
+#include "nxStructure.h"
 
 AnxProjectile::AnxProjectile() : damage(10.f)
 {
@@ -67,6 +69,7 @@ void AnxProjectile::projectileHit(UPrimitiveComponent* OverlappedComponent, AAct
 
 	
 	auto unit = Cast<AnxHero>(OtherActor);
+	auto enemy = Cast<AEnemySoldier>(OtherActor);
 	if(unit && unit->isEnemy || Cast<UWall>(OtherComp) && !Cast<AMetalBarricade>(OtherActor))
 	{
 		if (Cast<UWall>(OtherComp))
@@ -82,7 +85,27 @@ void AnxProjectile::projectileHit(UPrimitiveComponent* OverlappedComponent, AAct
 		projParticle->DeactivateSystem();
 		MarkPendingKill();
 	}
-	else if (!unit)
+	else if (enemy)
+	{
+		OtherActor->TakeDamage(damage, FDamageEvent(), UGameplayStatics::GetPlayerController(GetWorld(), 0), this);
+		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), explosion, GetActorLocation());
+		UGameplayStatics::SpawnSound2D(GetWorld(), SoundNormalHit3);
+		projMesh->SetHiddenInGame(true);
+		projParticle->DeactivateSystem();
+		MarkPendingKill();
+	}
+	else if (Cast<AnxStructure>(OtherActor))
+	{
+		OtherActor->TakeDamage(damage, FDamageEvent(), UGameplayStatics::GetPlayerController(GetWorld(), 0), this);
+		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), explosion, GetActorLocation());
+		UGameplayStatics::SpawnSound2D(GetWorld(), SoundNormalHit3);
+		UGameplayStatics::SpawnSound2D(GetWorld(), SoundNormalHit2);
+		UGameplayStatics::SpawnSound2D(GetWorld(), SoundNormalHit);
+		projMesh->SetHiddenInGame(true);
+		projParticle->DeactivateSystem();
+		MarkPendingKill();
+	}
+	else
 	{
 		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), explosion, GetActorLocation());
 		UGameplayStatics::SpawnSound2D(GetWorld(), SoundNormalHit2);
