@@ -77,7 +77,7 @@ float AEnemySoldier::rotateToPoint(FVector target)
 
 void AEnemySoldier::fireWeapon()
 {
-	GetWorld()->SpawnActor<AActor>(ammoOverride.Get(), GetActorLocation(), GetActorRotation(), FActorSpawnParameters());
+	GetWorld()->SpawnActor<AActor>(ammoOverride.Get(), GetActorLocation()-FVector(0,0,30), GetActorRotation(), FActorSpawnParameters());
 }
 
 float 	AEnemySoldier::TakeDamage
@@ -97,6 +97,7 @@ float 	AEnemySoldier::TakeDamage
 
 	if (heroHealth <= 90)
 		heroHealthbar->SetVisibility(true, true);
+	OnEnemyHit.Broadcast();
 
 	return Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
 }

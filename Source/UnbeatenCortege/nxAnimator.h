@@ -22,6 +22,7 @@ protected:
 	virtual void NativeUpdateAnimation(float delta) override;
 
 private:
+	UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = true))
 	class AnxHero* m_owner;
 
 	UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = true))
