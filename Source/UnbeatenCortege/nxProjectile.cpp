@@ -64,13 +64,13 @@ void AnxProjectile::Tick(float DeltaTime)
 
 void AnxProjectile::projectileHit(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	if (IsPendingKill() || OtherActor->ActorHasTag(FName("Invisible")))
+	if (IsPendingKill() || OtherActor->ActorHasTag(FName("Invisible")) || GetGameTimeSinceCreation() <= 0.01f)
 		return;
 
 	
 	auto unit = Cast<AnxHero>(OtherActor);
 	auto enemy = Cast<AEnemySoldier>(OtherActor);
-	if(unit && unit->isEnemy || Cast<UWall>(OtherComp) && !Cast<AMetalBarricade>(OtherActor))
+	if(Cast<UWall>(OtherComp) && !Cast<AMetalBarricade>(OtherActor))
 	{
 		if (Cast<UWall>(OtherComp))
 		{
@@ -85,7 +85,7 @@ void AnxProjectile::projectileHit(UPrimitiveComponent* OverlappedComponent, AAct
 		projParticle->DeactivateSystem();
 		MarkPendingKill();
 	}
-	else if (enemy)
+	else if (enemy || unit)
 	{
 		OtherActor->TakeDamage(damage, FDamageEvent(), UGameplayStatics::GetPlayerController(GetWorld(), 0), this);
 		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), explosion, GetActorLocation());

@@ -87,21 +87,9 @@ void AnxPController::proceedFire()
 	start = WorldLocation;
 	end = WorldLocation + WorldDirection * 10000;
 	//end.X -= 100;
-	FCollisionObjectQueryParams objParams(FCollisionObjectQueryParams::InitType::AllDynamicObjects);
+	FCollisionObjectQueryParams objParams(FCollisionObjectQueryParams::InitType::AllStaticObjects);
 	if (GetWorld()->LineTraceSingleByObjectType(hit, start, end, objParams))
 	{
-		auto floor = dynamic_cast<ACharacter*>(hit.GetActor());
-		if (floor)
-		{
-			//sDraw(hit.ImpactPoint);
-			m_soldier->fireWeapon(hit.ImpactPoint);
-		}
-		else
-		{
-			objParams.ObjectTypesToQuery = FCollisionObjectQueryParams::InitType::AllStaticObjects;
-			GetWorld()->LineTraceSingleByObjectType(hit, start, end, objParams);
-			m_soldier->fireWeapon(hit.ImpactPoint);
-		}
-
+		m_soldier->fireWeapon(hit.ImpactPoint);
 	}
 }

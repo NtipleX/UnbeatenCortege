@@ -7,6 +7,8 @@
 #include "nxProjectile.h"
 #include "EnemySoldier.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnEnemyHit);
+
 USTRUCT(BlueprintType)
 struct FOffensivity
 {
@@ -36,7 +38,6 @@ public:
 	void fireWeapon();
 
 
-public: // virtual
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
@@ -58,11 +59,16 @@ public:	// properties
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = nx, meta = (AllowPrivateAccess = true))
 	class UWidgetComponent* heroHealthbar;
 
+	UPROPERTY(BlueprintAssignable)
+	FOnEnemyHit OnEnemyHit;
+
+
 private:
 	UPROPERTY()
 	AnxWeapon* m_gun;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = nx, meta = (AllowPrivateAccess = true))
 	float heroHealth;
+
 
 };
