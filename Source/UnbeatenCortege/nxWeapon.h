@@ -14,6 +14,16 @@ public:
 	AnxWeapon();
 	void fireWeapon(FVector direction, FVector startPos);
 
+	UPROPERTY(EditDefaultsOnly, Category = nx)
+	class USoundCue* SoundFire;
+
+	UPROPERTY(EditDefaultsOnly, Category = nx)
+	class UParticleSystem* ParticleFire;
+
+	UPROPERTY(EditDefaultsOnly, Category = nx)
+	float reloadTime;
+
+
 protected:
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
@@ -25,15 +35,6 @@ private:
 
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<class AnxProjectile> projectile;
-
-	UPROPERTY(EditDefaultsOnly, Category = nx)
-	float reloadTime;
-
-	UPROPERTY(EditDefaultsOnly, Category = nx)
-	class USoundCue* SoundFire;
-
-	UPROPERTY(EditDefaultsOnly, Category = nx)
-	class UParticleSystem* ParticleFire;
 
 	FTimerHandle m_timer_reload;
 

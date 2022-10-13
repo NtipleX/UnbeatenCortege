@@ -3,8 +3,10 @@
 #include "Kismet/KismetMathLibrary.h"
 #include "Components/WidgetComponent.h"
 #include "TraceHelpers.h"
+#include "Kismet/GameplayStatics.h"
+#include "Sound/SoundCue.h"
 
-AEnemySoldier::AEnemySoldier() : heroHealth(100.f)
+AEnemySoldier::AEnemySoldier() : heroHealth(100.f), m_lastTimeShot(0.f)
 {
 	PrimaryActorTick.bCanEverTick = true;
 	offensivity.Level = 1;
@@ -77,7 +79,13 @@ float AEnemySoldier::rotateToPoint(FVector target)
 
 void AEnemySoldier::fireWeapon()
 {
-	GetWorld()->SpawnActor<AActor>(ammoOverride.Get(), GetActorLocation()-FVector(0,0,30), GetActorRotation(), FActorSpawnParameters());
+	if(GetWorld()->TimeSeconds - m_lastTimeShot >= weapon.GetDefaultObject()->reloadTime)
+	{
+		m_lastTimeShot = GetWorld()->TimeSeconds;
+		GetWorld()->SpawnActor<AActor>(ammoOverride.Get(), GetActorLocation()-FVector(0,0,30), GetActorRotation(), FActorSpawnParameters());
+		UGameplayStatics::PlaySound2D(GetWorld(), weapon.GetDefaultObject()->SoundFire);
+		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), weapon.GetDefaultObject()->ParticleFire, m_gun->GetActorLocation());
+	}
 }
 
 float 	AEnemySoldier::TakeDamage
