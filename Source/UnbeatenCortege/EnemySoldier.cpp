@@ -14,7 +14,7 @@ AEnemySoldier::AEnemySoldier() : heroHealth(100.f)
 	GetCharacterMovement()->bUseControllerDesiredRotation = true;
 	heroHealthbar = CreateDefaultSubobject<UWidgetComponent>(TEXT("HeroWidgetComp"));
 	heroHealthbar->SetupAttachment(RootComponent);
-	heroHealthbar->SetRelativeLocation(FVector(0, 0, 100));
+	heroHealthbar->SetRelativeLocation(FVector(0, 0, 115));
 	heroHealthbar->SetWidgetSpace(EWidgetSpace::Screen);
 	heroHealthbar->SetDrawSize(FVector2D(60, 10));
 	heroHealthbar->SetVisibility(false, false);

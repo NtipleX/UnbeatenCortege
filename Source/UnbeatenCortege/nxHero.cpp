@@ -17,7 +17,7 @@ AnxHero::AnxHero()
 	heroHealthbar = CreateDefaultSubobject<UWidgetComponent>(TEXT("HeroWidgetComp"));
 	camera->SetupAttachment(RootComponent);
 	heroHealthbar->SetupAttachment(RootComponent);
-	heroHealthbar->SetRelativeLocation(FVector(0, 0, 150));
+	heroHealthbar->SetRelativeLocation(FVector(0, 0, 165));
 	camera->SetRelativeLocation(FVector(-250, 0, 0));
 
 	PrimaryActorTick.bCanEverTick = true;
