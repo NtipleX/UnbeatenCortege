@@ -70,5 +70,7 @@ private:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = nx, meta = (AllowPrivateAccess = true))
 	float heroHealth;
 
+	float m_lastTimeShot;
+
 
 };
