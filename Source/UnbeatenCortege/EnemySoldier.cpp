@@ -79,10 +79,10 @@ float AEnemySoldier::rotateToPoint(FVector target)
 
 void AEnemySoldier::fireWeapon()
 {
-	if(GetWorld()->TimeSeconds - m_lastTimeShot >= weapon.GetDefaultObject()->reloadTime)
+	if(GetWorld()->TimeSeconds - m_lastTimeShot >= weapon.GetDefaultObject()->reloadTime*1.75)
 	{
 		m_lastTimeShot = GetWorld()->TimeSeconds;
-		GetWorld()->SpawnActor<AActor>(ammoOverride.Get(), GetActorLocation()-FVector(0,0,30), GetActorRotation(), FActorSpawnParameters());
+		GetWorld()->SpawnActor<AActor>(ammoOverride.Get(), GetActorLocation()-FVector(0,0,0), GetActorRotation(), FActorSpawnParameters());
 		UGameplayStatics::PlaySound2D(GetWorld(), weapon.GetDefaultObject()->SoundFire);
 		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), weapon.GetDefaultObject()->ParticleFire, m_gun->GetActorLocation());
 	}
