@@ -87,9 +87,18 @@ void AnxPController::proceedFire()
 	start = WorldLocation;
 	end = WorldLocation + WorldDirection * 10000;
 	//end.X -= 100;
-	FCollisionObjectQueryParams objParams(FCollisionObjectQueryParams::InitType::AllStaticObjects);
-	if (GetWorld()->LineTraceSingleByObjectType(hit, start, end, objParams))
+	FCollisionObjectQueryParams objParams(FCollisionObjectQueryParams::InitType::AllObjects);
+	if(GetWorld()->LineTraceSingleByObjectType(hit, start, end, objParams))
 	{
-		m_soldier->fireWeapon(hit.ImpactPoint);
+		if(dynamic_cast<ACharacter*>(hit.Actor.Get()))
+		{
+			m_soldier->fireWeapon(hit.Actor->GetActorLocation()-FVector(0, 0, 25));
+		}
+		else
+		{
+			FCollisionObjectQueryParams objParams2(FCollisionObjectQueryParams::InitType::AllStaticObjects);
+			GetWorld()->LineTraceSingleByObjectType(hit, start, end, objParams2);
+			m_soldier->fireWeapon(hit.ImpactPoint);
+		}
 	}
 }
