@@ -24,6 +24,8 @@ public:
 	UFUNCTION(BlueprintCallable)
 	float getHeroHealth() const;
 
+	int xLook;
+	int yLook;
 	bool isEnemy;
 
 protected:

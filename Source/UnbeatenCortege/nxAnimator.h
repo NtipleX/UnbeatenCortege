@@ -30,8 +30,16 @@ private:
 
 	UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = true))
 	float heroVelocity;
+	UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = true))
+	float xHeroVelocity;
+	UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = true))
+	float yHeroVelocity;
 
 	UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = true))
 	float xReturn;
+	UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = true))
+	float yReturn;
+	UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = true))
+	float xVelocity;
 
 };

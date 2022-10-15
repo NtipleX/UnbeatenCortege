@@ -59,9 +59,18 @@ void AnxPController::Tick(float delta)
 			float angle = FMath::Acos(sina)*57.296 * -1*FMath::Sign(A.X);
 			m_soldier->SetActorRotation(FRotator(0, angle+100, 0));
 
+			// Determine x/y look.
+			if (m_soldier)
+			{
+				FVector heroLoc = m_soldier->GetActorLocation();
+				FVector cursorLoc = hit.ImpactPoint;
+				m_soldier->xLook = heroLoc.X< cursorLoc.X ? 1 : -1;
+				m_soldier->yLook = heroLoc.Y< cursorLoc.Y ? 1 : -1;
+			}
 		}
 
 	}
+
 }
 
 bool AnxPController::InputKey(FKey Key, EInputEvent EventType, float AmountDepressed, bool bGamepad)
