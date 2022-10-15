@@ -23,6 +23,9 @@ void UnxAnimator::NativeUpdateAnimation(float delta)
 		// Basic condition for movement animation sequences
 		if (!m_startedPlaying && heroVelocity != 0.f) m_startedPlaying = true;
 
+		xReturn = m_owner->GetActorForwardVector().X;
 
+		GEngine->AddOnScreenDebugMessage(0, GetWorld()->GetDeltaSeconds(), FColor::Cyan, FString::SanitizeFloat(xReturn));
+		GEngine->AddOnScreenDebugMessage(1, GetWorld()->GetDeltaSeconds(), FColor::Cyan, FString::SanitizeFloat(velocity.X));
 	}
 }

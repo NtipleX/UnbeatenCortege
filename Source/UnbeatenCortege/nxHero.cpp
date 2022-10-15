@@ -37,7 +37,7 @@ void AnxHero::BeginPlay()
 {
 	Super::BeginPlay();
 	m_animator = Cast<UnxAnimator>(GetMesh()->GetAnimInstance());
-
+	
 	/// Spawning & attaching starting gun for hero
 	if (startingWeapon)
 	{

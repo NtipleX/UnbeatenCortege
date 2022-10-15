@@ -31,4 +31,7 @@ private:
 	UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = true))
 	float heroVelocity;
 
+	UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = true))
+	float xReturn;
+
 };
