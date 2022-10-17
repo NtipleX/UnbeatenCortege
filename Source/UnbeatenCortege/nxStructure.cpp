@@ -48,6 +48,9 @@ float AnxStructure::TakeDamage(float DamageAmount, FDamageEvent const& DamageEve
 	m_health -= DamageAmount;
 	structHealthbar->SetVisibility(true, true);
 	if (m_health <= 0)
+	{
+		destroyed.Broadcast();
 		Destroy();
+	}
 	return Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
 }

@@ -79,7 +79,7 @@ float AEnemySoldier::rotateToPoint(FVector target)
 
 void AEnemySoldier::fireWeapon()
 {
-	if(GetWorld()->TimeSeconds - m_lastTimeShot >= weapon.GetDefaultObject()->reloadTime*1.75)
+	if(GetWorld()->TimeSeconds - m_lastTimeShot >= weapon.GetDefaultObject()->reloadTime*1.2)
 	{
 		m_lastTimeShot = GetWorld()->TimeSeconds;
 		GetWorld()->SpawnActor<AActor>(ammoOverride.Get(), GetActorLocation()-FVector(0,0,0), GetActorRotation(), FActorSpawnParameters());
