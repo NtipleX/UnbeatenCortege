@@ -4,12 +4,17 @@
 #include "GameFramework/Actor.h"
 #include "nxStructure.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FTriggerDelegate);
+
 UCLASS()
 class UNBEATENCORTEGE_API AnxStructure : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
+
+	UPROPERTY(BlueprintReadWrite)
+	FTriggerDelegate destroyed;
 
 	AnxStructure();
 
@@ -24,7 +29,7 @@ protected:
 	/// Components
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = true))
 	class UStaticMeshComponent* structMesh;
-	UPROPERTY(EditDefaultsOnly, meta = (AllowPrivateAccess = true))
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, meta = (AllowPrivateAccess = true))
 	class UWidgetComponent* structHealthbar;
 	UPROPERTY(EditDefaultsOnly, meta = (AllowPrivateAccess = true))
 	class UBoxComponent* structBox;

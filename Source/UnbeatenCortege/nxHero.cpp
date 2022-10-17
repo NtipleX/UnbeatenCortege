@@ -5,6 +5,8 @@
 #include "Components/CapsuleComponent.h"
 #include "Components/WidgetComponent.h"
 #include "nxAnimator.h"
+#include "Kismet/GameplayStatics.h"
+#include "nxGameMode.h"
 
 AnxHero::AnxHero()
 	: m_gun(nullptr)
@@ -96,6 +98,8 @@ void AnxHero::Destroyed()
 {
 	if (m_gun)
 		m_gun->Destroy();
+	auto gm = dynamic_cast<AnxGameMode*>(UGameplayStatics::GetGameMode(GetWorld()));
+	gm->GameOverEvent();
 	Super::Destroyed();
 }
 

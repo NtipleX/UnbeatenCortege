@@ -13,7 +13,13 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	class AMapOffensive* mapOffensive;
 
-public:
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	TSubclassOf<class AnxStructure> mainStab;
+
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void GameOverEvent();
+
 	virtual void StartPlay() override;
 
 };
