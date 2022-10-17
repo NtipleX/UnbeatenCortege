@@ -19,7 +19,7 @@ UWall::UWall() : m_health(2.f)
 
 	SetCollisionObjectType(ECollisionChannel::ECC_WorldDynamic);
 	SetCollisionResponseToChannels(ECR_Block);
-	wallBox->SetWorldScale3D(FVector(1.8, 1.8, 8));
+	wallBox->SetWorldScale3D(FVector(1.5, 1.5, 5));
 	wallBox->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
 	wallBox->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
 	wallBox->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Block);

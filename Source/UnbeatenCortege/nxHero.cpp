@@ -96,11 +96,11 @@ float AnxHero::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, A
 
 void AnxHero::Destroyed()
 {
+	cLog("Destroying hero");
 	if (m_gun)
 		m_gun->Destroy();
 	auto gm = dynamic_cast<AnxGameMode*>(UGameplayStatics::GetGameMode(GetWorld()));
 	gm->GameOverEvent();
-	Super::Destroyed();
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
