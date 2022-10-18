@@ -5,6 +5,7 @@
 #include "TimerManager.h"
 #include "Kismet/GameplayStatics.h"
 #include "EnemySoldier.h"
+#include "nxGameMode.h"
 
 // Sets default values
 AnxEnemySpawner::AnxEnemySpawner() : m_index(0), currentWaveEnemyCounter(0)
@@ -81,8 +82,12 @@ void AnxEnemySpawner::spawnCortege()
 		}
 		else
 		{
-			GEngine->AddOnScreenDebugMessage(0, 10, FColor::Cyan, FString("No waves remain"));
-			return;
+			if (!UGameplayStatics::GetActorOfClass(GetWorld(), AEnemySoldier::StaticClass()))
+			{
+				GetWorldTimerManager().SetTimer(respawnKD, this, &AnxEnemySpawner::spawnCortege, 0.5f, false, 0.5f);
+				return;
+			}
+			dynamic_cast<AnxGameMode*>(UGameplayStatics::GetGameMode(GetWorld()))->GameWinEvent();
 		}
 	}
 

@@ -19,6 +19,9 @@ public:
 
 	UFUNCTION(BlueprintImplementableEvent)
 	void GameOverEvent();
+	
+	UFUNCTION(BlueprintImplementableEvent)
+	void GameWinEvent();
 
 	virtual void StartPlay() override;
 
