@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Animation/AnimInstance.h"
+#include "Animation/AnimMontage.h"
 #include "EnemySoldierAnimator.generated.h"
 
 UCLASS(Blueprintable)
@@ -21,6 +22,12 @@ public:
 
 	UPROPERTY(BlueprintReadWrite)
 	bool IsResting;
+
+	UPROPERTY(EditDefaultsOnly)
+	UAnimMontage* fireGun;
+	
+	UPROPERTY(EditDefaultsOnly)
+	UAnimMontage* hitMontage;
 
 	
 	virtual void NativeBeginPlay() override;

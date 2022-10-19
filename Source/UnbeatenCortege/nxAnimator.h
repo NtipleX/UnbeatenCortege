@@ -16,6 +16,9 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = nx)
 	UAnimMontage* animMontage;
 
+	UPROPERTY(EditDefaultsOnly)
+	UAnimMontage* fireGun;
+
 	UnxAnimator();
 
 protected:

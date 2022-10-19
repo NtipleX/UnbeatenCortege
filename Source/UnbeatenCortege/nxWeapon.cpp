@@ -32,9 +32,9 @@ void AnxWeapon::Tick(float DeltaTime)
 
 }
 
-void AnxWeapon::fireWeapon(FVector direction, FVector startPos)
+bool AnxWeapon::fireWeapon(FVector direction, FVector startPos)
 {
-	if(GetWorldTimerManager().GetTimerRemaining(m_timer_reload)>0.1) return;
+	if(GetWorldTimerManager().GetTimerRemaining(m_timer_reload)>0.1) return false;
 	
 	GetWorldTimerManager().SetTimer(m_timer_reload, reloadTime, false, reloadTime);
 	/// Shoot by direction
@@ -54,4 +54,6 @@ void AnxWeapon::fireWeapon(FVector direction, FVector startPos)
 		auto pushed = GetWorld()->SpawnActor<AnxProjectile>(projectile, start, rot);
 	}
 	else TRACE_WARNING(LogTemp, "Projectile for weapon not set");
+
+	return true;
 }

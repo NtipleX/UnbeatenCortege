@@ -5,6 +5,7 @@
 #include "GenericTeamAgentInterface.h"
 #include "nxWeapon.h"
 #include "nxProjectile.h"
+#include "EnemySoldierAnimator.h"
 #include "EnemySoldier.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnEnemyHit);
@@ -71,6 +72,9 @@ private:
 	float heroHealth;
 
 	float m_lastTimeShot;
+	UEnemySoldierAnimator* m_animator;
 
+	UPROPERTY(BlueprintReadWrite, Category = nx, meta = (AllowPrivateAccess = true))
+	bool canShoot;
 
 };

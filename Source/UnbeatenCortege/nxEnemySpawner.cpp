@@ -82,12 +82,11 @@ void AnxEnemySpawner::spawnCortege()
 		}
 		else
 		{
-			if (!UGameplayStatics::GetActorOfClass(GetWorld(), AEnemySoldier::StaticClass()))
-			{
+			if (UGameplayStatics::GetActorOfClass(GetWorld(), AEnemySoldier::StaticClass()))
 				GetWorldTimerManager().SetTimer(respawnKD, this, &AnxEnemySpawner::spawnCortege, 0.5f, false, 0.5f);
-				return;
-			}
-			dynamic_cast<AnxGameMode*>(UGameplayStatics::GetGameMode(GetWorld()))->GameWinEvent();
+			else
+				dynamic_cast<AnxGameMode*>(UGameplayStatics::GetGameMode(GetWorld()))->GameWinEvent();
+			return;
 		}
 	}
 
