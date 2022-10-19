@@ -10,6 +10,7 @@
 #include "Sound/SoundCue.h"
 #include "EnemySoldier.h"
 #include "nxStructure.h"
+#include "AIBerserk.h"
 
 AnxProjectile::AnxProjectile() : damage(10.f)
 {
@@ -70,6 +71,7 @@ void AnxProjectile::projectileHit(UPrimitiveComponent* OverlappedComponent, AAct
 	
 	auto unit = Cast<AnxHero>(OtherActor);
 	auto enemy = Cast<AEnemySoldier>(OtherActor);
+	auto enemy2 = Cast<AAIBerserk>(OtherActor);
 	if(Cast<UWall>(OtherComp) && !Cast<AMetalBarricade>(OtherActor))
 	{
 		if (Cast<UWall>(OtherComp))
@@ -85,7 +87,7 @@ void AnxProjectile::projectileHit(UPrimitiveComponent* OverlappedComponent, AAct
 		projParticle->DeactivateSystem();
 		MarkPendingKill();
 	}
-	else if (enemy || unit)
+	else if (enemy || unit || enemy2)
 	{
 		OtherActor->TakeDamage(damage, FDamageEvent(), UGameplayStatics::GetPlayerController(GetWorld(), 0), this);
 		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), explosion, GetActorLocation());
