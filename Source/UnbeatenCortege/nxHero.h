@@ -34,7 +34,6 @@ protected:
 	// Setting up bindings
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	virtual float TakeDamage(float DamageAmount,struct FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
-	virtual void Destroyed() override;
 
 private:
 	/// Input Bindings
@@ -63,6 +62,9 @@ private:
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = nx, meta = (AllowPrivateAccess = true))
 	float heroAlive;
+
+	UPROPERTY(BlueprintReadWrite, Category = nx, meta = (AllowPrivateAccess = true))
+	bool canShoot;
 
 	class UnxAnimator* m_animator;
 

@@ -12,7 +12,7 @@ class UNBEATENCORTEGE_API AnxWeapon : public AActor
 	
 public:	
 	AnxWeapon();
-	void fireWeapon(FVector direction, FVector startPos);
+	bool fireWeapon(FVector direction, FVector startPos);
 
 	UPROPERTY(EditDefaultsOnly, Category = nx)
 	class USoundCue* SoundFire;

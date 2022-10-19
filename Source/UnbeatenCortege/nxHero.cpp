@@ -14,6 +14,7 @@ AnxHero::AnxHero()
 	, heroHealth(100.f)
 	, heroAlive(true)
 	, isEnemy(true)
+	, canShoot(true)
 {
 	camera = CreateDefaultSubobject<UCameraComponent>(TEXT("HeroCameraComp"));
 	heroHealthbar = CreateDefaultSubobject<UWidgetComponent>(TEXT("HeroWidgetComp"));
@@ -84,7 +85,12 @@ float AnxHero::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, A
 	if (heroHealth <= 0)
 	{
 		heroAlive = false;
-		Destroy();
+		//Destroying
+		/*if (m_gun)
+			m_gun->Destroy();
+		Destroy();*/
+		auto gm = dynamic_cast<AnxGameMode*>(UGameplayStatics::GetGameMode(GetWorld()));
+		gm->GameOverEvent();
 	}
 
 	if (heroHealth <= 90)
@@ -92,16 +98,9 @@ float AnxHero::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, A
 	else heroHealthbar->SetVisibility(false, false);
 
 	return Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
+	
 }
 
-void AnxHero::Destroyed()
-{
-	cLog("Destroying hero");
-	if (m_gun)
-		m_gun->Destroy();
-	auto gm = dynamic_cast<AnxGameMode*>(UGameplayStatics::GetGameMode(GetWorld()));
-	gm->GameOverEvent();
-}
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -117,13 +116,22 @@ void AnxHero::moveSide(float axis)
 
 void AnxHero::fireWeapon(FVector pointOnMap)
 {
+	if(!canShoot)
+		return;
+
 	/// Shoot to direction
 	FVector start = GetActorLocation();
 	pointOnMap.Z = start.Z;
 	FVector vectorDirection = pointOnMap - start;
+	bool fire = false;
 	if (m_gun)
 	{
-		m_gun->fireWeapon(vectorDirection, GetActorLocation());
+		fire = m_gun->fireWeapon(vectorDirection, GetActorLocation());
+	}
+	if (fire && m_animator->fireGun)
+	{
+		m_animator->Montage_JumpToSection(FName("MySection"), m_animator->fireGun);
+		m_animator->Montage_Play(m_animator->fireGun);
 	}
 }
 

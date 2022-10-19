@@ -6,7 +6,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "Sound/SoundCue.h"
 
-AEnemySoldier::AEnemySoldier() : heroHealth(100.f), m_lastTimeShot(0.f)
+AEnemySoldier::AEnemySoldier() : heroHealth(100.f), m_lastTimeShot(0.f), canShoot(true)
 {
 	PrimaryActorTick.bCanEverTick = true;
 	offensivity.Level = 1;
@@ -31,6 +31,7 @@ void AEnemySoldier::BeginPlay()
 		m_gun = GetWorld()->SpawnActor<AnxWeapon>(weapon, FTransform());
 		m_gun->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, FName("SKT_Pistol"));
 	}
+	m_animator = dynamic_cast<UEnemySoldierAnimator*>(GetMesh()->GetAnimInstance());
 }
 
 void AEnemySoldier::Tick(float DeltaTime)
@@ -79,12 +80,17 @@ float AEnemySoldier::rotateToPoint(FVector target)
 
 void AEnemySoldier::fireWeapon()
 {
-	if(GetWorld()->TimeSeconds - m_lastTimeShot >= weapon.GetDefaultObject()->reloadTime*1.2)
+	if(canShoot && GetWorld()->TimeSeconds - m_lastTimeShot >= weapon.GetDefaultObject()->reloadTime*1.2)
 	{
 		m_lastTimeShot = GetWorld()->TimeSeconds;
 		GetWorld()->SpawnActor<AActor>(ammoOverride.Get(), GetActorLocation()-FVector(0,0,0), GetActorRotation(), FActorSpawnParameters());
 		UGameplayStatics::PlaySound2D(GetWorld(), weapon.GetDefaultObject()->SoundFire);
 		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), weapon.GetDefaultObject()->ParticleFire, m_gun->GetActorLocation());
+		if(m_animator->fireGun)
+		{
+			m_animator->Montage_JumpToSection(FName("MySection"), m_animator->fireGun);
+			m_animator->Montage_Play(m_animator->fireGun);
+		}
 	}
 }
 
@@ -97,6 +103,12 @@ float 	AEnemySoldier::TakeDamage
 )
 {
 	heroHealth -= DamageAmount;
+
+	if (m_animator->hitMontage)
+	{
+		m_animator->Montage_JumpToSection(FName("Default"), m_animator->hitMontage);
+		m_animator->Montage_Play(m_animator->hitMontage);
+	}
 
 	if (heroHealth <= 0)
 	{
