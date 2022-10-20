@@ -21,10 +21,17 @@ public:
 	TSubclassOf<class ATakeable> slot2;
 	UPROPERTY(EditAnywhere)
 	FVector socketPos;
+	UPROPERTY(EditDefaultsOnly)
+	class UAnimMontage* stabMontage;
+	UPROPERTY(EditDefaultsOnly)
+	class UAnimMontage* kickMontage;
 
 
 public:
 	AAIBerserk();
+
+	UFUNCTION(BlueprintCallable)
+	void stab();
 
 
 public:
