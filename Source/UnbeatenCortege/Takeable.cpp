@@ -10,4 +10,5 @@ ATakeable::ATakeable()
 	boxComp->SetupAttachment(meshComp);
 	meshComp->SetRelativeLocation(FVector::ZeroVector);
 	boxComp->SetRelativeLocation(FVector::ZeroVector);
+	boxComp->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 }

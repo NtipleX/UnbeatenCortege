@@ -1,6 +1,8 @@
 #include "AIBerserk.h"
 #include "Components/WidgetComponent.h"
 #include "Takeable.h"
+#include "Animation/AnimInstance.h"
+#include "Animation/AnimMontage.h"
 
 AAIBerserk::AAIBerserk(): Health(50.f)
 {
@@ -43,6 +45,18 @@ float AAIBerserk::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent
 {
 	HealthBar->SetVisibility(true, true);
 	Health -= DamageAmount;
+
+	if (Health <= 0)
+	{
+		m_slot1->Destroy();
+		Destroy();
+	}
 	
 	return 0.f;
+}
+
+void AAIBerserk::stab()
+{
+	GetMesh()->GetAnimInstance()->Montage_JumpToSection(FName("MySection"), stabMontage);
+	GetMesh()->GetAnimInstance()->Montage_Play(stabMontage);
 }
