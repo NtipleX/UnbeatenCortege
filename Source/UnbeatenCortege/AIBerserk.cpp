@@ -57,6 +57,15 @@ float AAIBerserk::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent
 
 void AAIBerserk::stab()
 {
-	GetMesh()->GetAnimInstance()->Montage_JumpToSection(FName("MySection"), stabMontage);
-	GetMesh()->GetAnimInstance()->Montage_Play(stabMontage);
+	
+	if(FMath::RandBool())
+	{
+		GetMesh()->GetAnimInstance()->Montage_JumpToSection(FName("MySection"), stabMontage);
+		GetMesh()->GetAnimInstance()->Montage_Play(stabMontage);
+	}
+	else
+	{
+		GetMesh()->GetAnimInstance()->Montage_JumpToSection(FName("MySection"), kickMontage);
+		GetMesh()->GetAnimInstance()->Montage_Play(kickMontage);
+	}
 }
