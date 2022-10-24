@@ -5,8 +5,9 @@
 #include "TraceHelpers.h"
 #include "Kismet/GameplayStatics.h"
 #include "Sound/SoundCue.h"
+#include "Components/CapsuleComponent.h"
 
-AEnemySoldier::AEnemySoldier() : heroHealth(100.f), m_lastTimeShot(0.f), canShoot(true)
+AEnemySoldier::AEnemySoldier() : heroHealth(100.f), m_lastTimeShot(0.f), canShoot(true), m_sinkCounter(0)
 {
 	PrimaryActorTick.bCanEverTick = true;
 	offensivity.Level = 1;
@@ -102,6 +103,9 @@ float 	AEnemySoldier::TakeDamage
 	AActor* DamageCauser
 )
 {
+	if (heroHealth < 0.f)
+		return 0.f;
+
 	heroHealth -= DamageAmount;
 
 	if (m_animator->hitMontage)
@@ -110,13 +114,24 @@ float 	AEnemySoldier::TakeDamage
 		m_animator->Montage_Play(m_animator->hitMontage);
 	}
 
-	if (heroHealth <= 0)
-	{
-		Destroy();
-	}
-
 	if (heroHealth <= 90)
 		heroHealthbar->SetVisibility(true, true);
+
+	if (heroHealth <= 0)
+	{
+		heroHealthbar->SetVisibility(false, false);
+		GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+		GetMesh()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+		AController* CON = GetController();
+		CON->StopMovement();
+		CON->UnPossess();
+		CON->Destroy();
+		GetMesh()->GetAnimInstance()->Montage_JumpToSection(FName("MySection"), dieMontage);
+		GetMesh()->GetAnimInstance()->Montage_Play(dieMontage);
+		GetWorldTimerManager().SetTimer(m_sinkingDeath, this, &AEnemySoldier::sinkBody, 2, false, 2);
+	}
+
+	
 	OnEnemyHit.Broadcast();
 
 	return Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
@@ -129,3 +144,11 @@ void AEnemySoldier::Destroyed()
 	Super::Destroyed();
 }
 
+void AEnemySoldier::sinkBody()
+{
+	if (m_sinkCounter++ < 9)
+	{
+		GetWorldTimerManager().SetTimer(m_sinkingDeath, this, &AEnemySoldier::sinkBody, 0.65, false, 0.65);
+		AddActorLocalOffset(FVector(0, 0, -1.8));
+	}
+}

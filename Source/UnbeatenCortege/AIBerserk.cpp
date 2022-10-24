@@ -3,8 +3,12 @@
 #include "Takeable.h"
 #include "Animation/AnimInstance.h"
 #include "Animation/AnimMontage.h"
+#include "AIController.h"
+#include "AITypes.h"
+#include "Components/CapsuleComponent.h"
 
-AAIBerserk::AAIBerserk(): Health(50.f)
+
+AAIBerserk::AAIBerserk(): Health(50.f), m_sinkCounter(0)
 {
 	PrimaryActorTick.bCanEverTick = true;
 	HealthBar = CreateDefaultSubobject<UWidgetComponent>(TEXT("WidgetComponent"));
@@ -44,12 +48,21 @@ void AAIBerserk::SetupPlayerInputComponent(UInputComponent* PIC)
 float AAIBerserk::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
 {
 	HealthBar->SetVisibility(true, true);
-	Health -= DamageAmount;
+	if (Health > 0)
+		Health -= DamageAmount;
+	else
+		return 0.f;
 
 	if (Health <= 0)
 	{
-		m_slot1->Destroy();
-		Destroy();
+		HealthBar->SetVisibility(false, false);
+		GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+		GetMesh()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+		GetController()->StopMovement();
+		GetController()->UnPossess();
+		GetMesh()->GetAnimInstance()->Montage_JumpToSection(FName("MySection"), dieMontage);
+		GetMesh()->GetAnimInstance()->Montage_Play(dieMontage);
+		GetWorldTimerManager().SetTimer(m_sinkingDeath, this, &AAIBerserk::sinkBody, 3, false, 3);
 	}
 	
 	return 0.f;
@@ -67,5 +80,14 @@ void AAIBerserk::stab()
 	{
 		GetMesh()->GetAnimInstance()->Montage_JumpToSection(FName("MySection"), kickMontage);
 		GetMesh()->GetAnimInstance()->Montage_Play(kickMontage);
+	}
+}
+
+void AAIBerserk::sinkBody()
+{
+	if (m_sinkCounter++ < 6)
+	{
+		GetWorldTimerManager().SetTimer(m_sinkingDeath, this, &AAIBerserk::sinkBody, 0.35, false, 0.35);
+		AddActorLocalOffset(FVector(0, 0, -2.75));
 	}
 }

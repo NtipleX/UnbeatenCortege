@@ -12,3 +12,8 @@ ATakeable::ATakeable()
 	boxComp->SetRelativeLocation(FVector::ZeroVector);
 	boxComp->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 }
+
+void ATakeable::specificAction_Implementation()
+{
+
+}

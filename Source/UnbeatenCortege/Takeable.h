@@ -14,10 +14,15 @@ public:
 	class UStaticMeshComponent* meshComp;
 	UPROPERTY(EditDefaultsOnly)
 	class UBoxComponent* boxComp;
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	FTransform MeshToSocketTransform;
+	UPROPERTY(BlueprintReadWrite)
+	AActor* specificActor;
 
 public:
 	ATakeable();
+	
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
+	void specificAction();
 
 };

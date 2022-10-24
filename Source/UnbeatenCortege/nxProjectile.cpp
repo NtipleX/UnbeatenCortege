@@ -107,6 +107,10 @@ void AnxProjectile::projectileHit(UPrimitiveComponent* OverlappedComponent, AAct
 		projParticle->DeactivateSystem();
 		MarkPendingKill();
 	}
+	else if (Cast<AnxProjectile>(OtherActor) && FMath::RandBool())
+	{
+		
+	}
 	else
 	{
 		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), explosion, GetActorLocation());

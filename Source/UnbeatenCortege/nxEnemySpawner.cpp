@@ -52,7 +52,16 @@ void AnxEnemySpawner::spawnCortege()
 			if (currentWaveEnemyCounter == 0 && waves[0] > 0)
 			{
 				// Enemy counter condition
-				if(UGameplayStatics::GetActorOfClass(GetWorld(), AEnemySoldier::StaticClass()))
+				bool flag = false;
+				for (auto e : spawnedEnemySoldiers)
+				{
+					if (!e->m_isDead)
+					{
+						flag = true;
+						break;
+					}
+				}
+				if (flag)
 				{
 					GetWorldTimerManager().SetTimer(respawnKD, this, &AnxEnemySpawner::spawnCortege, 1.0f, false, 1.0f);
 					return;
@@ -82,7 +91,16 @@ void AnxEnemySpawner::spawnCortege()
 		}
 		else
 		{
-			if (UGameplayStatics::GetActorOfClass(GetWorld(), AEnemySoldier::StaticClass()))
+			bool flag = false;
+			for (auto e : spawnedEnemySoldiers)
+			{
+				if (!e->m_isDead)
+				{
+					flag = true;
+					break;
+				}
+			}
+			if (flag)
 				GetWorldTimerManager().SetTimer(respawnKD, this, &AnxEnemySpawner::spawnCortege, 0.5f, false, 0.5f);
 			else
 				dynamic_cast<AnxGameMode*>(UGameplayStatics::GetGameMode(GetWorld()))->GameWinEvent();
@@ -99,7 +117,10 @@ void AnxEnemySpawner::spawnCortege()
 		GEngine->AddOnScreenDebugMessage(0, 2, FColor::Cyan, FString("No corteges remain"));
 		return;
 	}
-	tunnels[m_index++]->spawnUnit(unitClass);
+	AActor* spawned = tunnels[m_index++]->spawnUnit(unitClass);
+	auto es = Cast<AEnemySoldier>(spawned);
+	if(es)
+		spawnedEnemySoldiers.Add(es);
 	--currentWaveEnemyCounter;
 	GetWorldTimerManager().SetTimer(respawnKD, this, &AnxEnemySpawner::spawnCortege, 1.0f, false, 1.0f);
 }
