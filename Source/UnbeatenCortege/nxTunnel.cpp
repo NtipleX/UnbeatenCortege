@@ -32,11 +32,11 @@ AnxTunnel::AnxTunnel()
 
 }
 
-void AnxTunnel::spawnUnit(TSubclassOf<ACharacter> unitClass)
+AActor* AnxTunnel::spawnUnit(TSubclassOf<ACharacter> unitClass)
 {
 	FActorSpawnParameters params;
 	params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
-	GetWorld()->SpawnActor<ACharacter>(unitClass.Get(), GetActorLocation(), GetActorRotation()-FRotator(0,90,0), params);
+	return GetWorld()->SpawnActor<ACharacter>(unitClass.Get(), GetActorLocation(), GetActorRotation()-FRotator(0,90,0), params);
 }
 
 // Called when the game starts or when spawned

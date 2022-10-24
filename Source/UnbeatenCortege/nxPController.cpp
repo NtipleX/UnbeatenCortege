@@ -99,7 +99,7 @@ void AnxPController::proceedFire()
 	FCollisionObjectQueryParams objParams(FCollisionObjectQueryParams::InitType::AllObjects);
 	if(GetWorld()->LineTraceSingleByObjectType(hit, start, end, objParams))
 	{
-		if(dynamic_cast<ACharacter*>(hit.Actor.Get()))
+		if(dynamic_cast<ACharacter*>(hit.Actor.Get()) && hit.Actor.Get() != GetPawn())
 		{
 			m_soldier->fireWeapon(hit.Actor->GetActorLocation()-FVector(0, 0, 25));
 		}

@@ -15,9 +15,9 @@ public:
 	float Health;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
 	class UWidgetComponent* HealthBar;
-	UPROPERTY(EditDefaultsOnly)
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	TSubclassOf<class ATakeable> slot1;
-	UPROPERTY(EditDefaultsOnly)
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	TSubclassOf<class ATakeable> slot2;
 	UPROPERTY(EditAnywhere)
 	FVector socketPos;
@@ -25,7 +25,12 @@ public:
 	class UAnimMontage* stabMontage;
 	UPROPERTY(EditDefaultsOnly)
 	class UAnimMontage* kickMontage;
-
+	UPROPERTY(EditDefaultsOnly)
+	class UAnimMontage* dieMontage;
+	UPROPERTY(BlueprintReadWrite)
+	ATakeable* m_slot1;
+	UPROPERTY(BlueprintReadWrite)
+	ATakeable* m_slot2;
 
 public:
 	AAIBerserk();
@@ -43,8 +48,9 @@ public:
 
 
 private:
-	ATakeable* m_slot1;
-	ATakeable* m_slot2;
-	
+	void sinkBody();
+
+	FTimerHandle m_sinkingDeath;
+	uint32 m_sinkCounter;
 
 };

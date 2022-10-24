@@ -26,7 +26,7 @@ public:
 	AnxTunnel();
 
 	UFUNCTION(BlueprintCallable)
-	void spawnUnit(TSubclassOf<ACharacter> unitClass);
+	AActor* spawnUnit(TSubclassOf<ACharacter> unitClass);
 
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;

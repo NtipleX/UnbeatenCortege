@@ -41,5 +41,6 @@ private:
 	int m_index;
 	int currentWaveEnemyCounter;
 	TQueue<TSubclassOf<ACharacter>, EQueueMode::Spsc> corteges;
+	TArray<class AEnemySoldier*> spawnedEnemySoldiers;
 
 };
