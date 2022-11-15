@@ -4,6 +4,7 @@
 #include "Components/BoxComponent.h"
 #include "Sound/SoundCue.h"
 #include "Kismet/GameplayStatics.h"
+#include "Particles/ParticleSystem.h"
 
 // Sets default values
 UWall::UWall() : m_health(2.f)
@@ -65,6 +66,10 @@ void UWall::GetDamage()
 
 		UGameplayStatics::PlaySound2D(GetWorld(), hitSound);
 	}
+
+	FVector loc = GetComponentLocation();
+	loc.Z-=10;
+	UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), SmokePump, loc, FRotator(), FVector(0.1f, 0.1f, 0.1f), true);
 }
 
 float UWall::GetHealth() const {

@@ -5,6 +5,7 @@
 #include "Sound/SoundCue.h"
 #include "Kismet/GameplayStatics.h"
 #include "Particles/ParticleSystem.h"
+#include "Kismet/KismetMathLibrary.h"
 
 AnxWeapon::AnxWeapon() : reloadTime(1.f)
 {
@@ -51,6 +52,7 @@ bool AnxWeapon::fireWeapon(FVector direction, FVector startPos)
 		auto degrees = FMath::Acos(sina) * 57.296 * -1*FMath::Sign(A1.X);
 		FRotator rot(0, degrees, 0 );
 
+		rot.Yaw += UKismetMathLibrary::RandomFloatInRange(MinSpread, MaxSpread);
 		auto pushed = GetWorld()->SpawnActor<AnxProjectile>(projectile, start, rot);
 	}
 	else TRACE_WARNING(LogTemp, "Projectile for weapon not set");

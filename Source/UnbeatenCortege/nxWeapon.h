@@ -23,6 +23,13 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category = nx)
 	float reloadTime;
 
+	// Weapon spread
+	UPROPERTY(EditDefaultsOnly, Category = nx)
+	float MinSpread;
+	// Weapon spread
+	UPROPERTY(EditDefaultsOnly, Category = nx)
+	float MaxSpread;
+
 
 protected:
 	virtual void BeginPlay() override;

@@ -35,6 +35,9 @@ private:
 	UPROPERTY(EditDefaultsOnly)
 	USoundCue* destroySound;
 
+	UPROPERTY(EditDefaultsOnly)
+	class UParticleSystem* SmokePump;
+
 	float m_health;
 
 };
