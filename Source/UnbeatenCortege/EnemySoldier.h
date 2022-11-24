@@ -39,6 +39,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void fireWeapon();
 
+	UFUNCTION(BlueprintImplementableEvent)
+	bool HasSeenPlayerBeforeDeath();
+
 
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
@@ -88,5 +91,6 @@ private:
 	bool canShoot;
 
 	uint32 m_sinkCounter;
+
 
 };
