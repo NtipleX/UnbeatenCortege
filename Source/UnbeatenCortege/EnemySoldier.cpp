@@ -119,16 +119,25 @@ float 	AEnemySoldier::TakeDamage
 
 	if (heroHealth <= 0)
 	{
+		bool HasSeenPlayer = HasSeenPlayerBeforeDeath();
+		if (HasSeenPlayer)
+		{
+			GetMesh()->GetAnimInstance()->Montage_JumpToSection(FName("MySection"), dieMontage);
+			GetMesh()->GetAnimInstance()->Montage_Play(dieMontage);
+			GetWorldTimerManager().SetTimer(m_sinkingDeath, this, &AEnemySoldier::sinkBody, 2, false, 2);
+		}
+		else
+		{
+			GetMesh()->SetSimulatePhysics(true);
+			SetLifeSpan(10.f);
+		}
 		heroHealthbar->SetVisibility(false, false);
 		GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-		GetMesh()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+		GetMesh()->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
 		AController* CON = GetController();
 		CON->StopMovement();
 		CON->UnPossess();
 		CON->Destroy();
-		GetMesh()->GetAnimInstance()->Montage_JumpToSection(FName("MySection"), dieMontage);
-		GetMesh()->GetAnimInstance()->Montage_Play(dieMontage);
-		GetWorldTimerManager().SetTimer(m_sinkingDeath, this, &AEnemySoldier::sinkBody, 2, false, 2);
 	}
 
 	
