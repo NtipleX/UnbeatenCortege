@@ -83,7 +83,8 @@ void AnxProjectile::projectileHit(UPrimitiveComponent* OverlappedComponent, AAct
 			UGameplayStatics::SpawnSound2D(GetWorld(), SoundNormalHit3);
 		OtherActor->TakeDamage(damage, FDamageEvent(), UGameplayStatics::GetPlayerController(GetWorld(), 0), this);
 		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), explosion, GetActorLocation());
-		projMesh->SetHiddenInGame(true);
+		projMesh->SetHiddenInGame(true, true);
+		projMesh->SetVisibility(false, false);
 		projParticle->DeactivateSystem();
 		MarkPendingKill();
 	}
@@ -92,7 +93,8 @@ void AnxProjectile::projectileHit(UPrimitiveComponent* OverlappedComponent, AAct
 		OtherActor->TakeDamage(damage, FDamageEvent(), UGameplayStatics::GetPlayerController(GetWorld(), 0), this);
 		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), explosion, GetActorLocation());
 		UGameplayStatics::SpawnSound2D(GetWorld(), SoundNormalHit3);
-		projMesh->SetHiddenInGame(true);
+		projMesh->SetHiddenInGame(true, true);
+		projMesh->SetVisibility(false, false);
 		projParticle->DeactivateSystem();
 		MarkPendingKill();
 	}
@@ -103,7 +105,8 @@ void AnxProjectile::projectileHit(UPrimitiveComponent* OverlappedComponent, AAct
 		UGameplayStatics::SpawnSound2D(GetWorld(), SoundNormalHit3);
 		UGameplayStatics::SpawnSound2D(GetWorld(), SoundNormalHit2);
 		UGameplayStatics::SpawnSound2D(GetWorld(), SoundNormalHit);
-		projMesh->SetHiddenInGame(true);
+		projMesh->SetHiddenInGame(true, true);
+		projMesh->SetVisibility(false, false);
 		projParticle->DeactivateSystem();
 		MarkPendingKill();
 	}
@@ -116,7 +119,8 @@ void AnxProjectile::projectileHit(UPrimitiveComponent* OverlappedComponent, AAct
 		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), explosion, GetActorLocation());
 		UGameplayStatics::SpawnSound2D(GetWorld(), SoundNormalHit2);
 		UGameplayStatics::SpawnSound2D(GetWorld(), SoundNormalHit);
-		projMesh->SetHiddenInGame(true);
+		projMesh->SetHiddenInGame(true, true);
+		projMesh->SetVisibility(false, false);
 		projParticle->DeactivateSystem();
 		MarkPendingKill();
 	}
