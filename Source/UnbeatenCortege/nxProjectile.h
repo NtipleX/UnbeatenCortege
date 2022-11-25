@@ -12,6 +12,9 @@ class UNBEATENCORTEGE_API AnxProjectile : public AActor
 public:	
 	AnxProjectile();
 
+	UFUNCTION(BlueprintImplementableEvent)
+	void HideShit();
+
 protected:
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;

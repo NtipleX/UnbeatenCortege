@@ -85,6 +85,17 @@ void AnxProjectile::projectileHit(UPrimitiveComponent* OverlappedComponent, AAct
 		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), explosion, GetActorLocation());
 		projMesh->SetHiddenInGame(true);
 		projParticle->DeactivateSystem();
+		projMesh->SetHiddenInGame(true);
+		TArray<USceneComponent*> comps;
+		RootComponent->GetChildrenComponents(true, comps);
+		for (auto comp : comps)
+		{
+			if (Cast<USceneComponent>(comp))
+			{
+				Cast<USceneComponent>(comp)->bHiddenInGame = true;
+			}
+		}
+		HideShit();
 		MarkPendingKill();
 	}
 	else if (enemy || unit || enemy2)
@@ -94,6 +105,17 @@ void AnxProjectile::projectileHit(UPrimitiveComponent* OverlappedComponent, AAct
 		UGameplayStatics::SpawnSound2D(GetWorld(), SoundNormalHit3);
 		projMesh->SetHiddenInGame(true);
 		projParticle->DeactivateSystem();
+		projMesh->SetHiddenInGame(true);
+		TArray<USceneComponent*> comps;
+		RootComponent->GetChildrenComponents(true, comps);
+		for (auto comp : comps)
+		{
+			if(Cast<USceneComponent>(comp))
+			{
+				Cast<USceneComponent>(comp)->bHiddenInGame = true;
+			}
+		}
+		HideShit();
 		MarkPendingKill();
 	}
 	else if (Cast<AnxStructure>(OtherActor))
@@ -104,7 +126,17 @@ void AnxProjectile::projectileHit(UPrimitiveComponent* OverlappedComponent, AAct
 		UGameplayStatics::SpawnSound2D(GetWorld(), SoundNormalHit2);
 		UGameplayStatics::SpawnSound2D(GetWorld(), SoundNormalHit);
 		projMesh->SetHiddenInGame(true);
+		TArray<USceneComponent*> comps;
+		RootComponent->GetChildrenComponents(true, comps);
+		for (auto comp : comps)
+		{
+			if (Cast<USceneComponent>(comp))
+			{
+				Cast<USceneComponent>(comp)->bHiddenInGame = true;
+			}
+		}
 		projParticle->DeactivateSystem();
+		HideShit();
 		MarkPendingKill();
 	}
 	else if (Cast<AnxProjectile>(OtherActor) && FMath::RandBool())
@@ -118,6 +150,16 @@ void AnxProjectile::projectileHit(UPrimitiveComponent* OverlappedComponent, AAct
 		UGameplayStatics::SpawnSound2D(GetWorld(), SoundNormalHit);
 		projMesh->SetHiddenInGame(true);
 		projParticle->DeactivateSystem();
+		TArray<USceneComponent*> comps;
+		RootComponent->GetChildrenComponents(true, comps);
+		for (auto comp : comps)
+		{
+			if (Cast<USceneComponent>(comp))
+			{
+				Cast<USceneComponent>(comp)->bHiddenInGame = true;
+			}
+		}
+		HideShit();
 		MarkPendingKill();
 	}
 }
