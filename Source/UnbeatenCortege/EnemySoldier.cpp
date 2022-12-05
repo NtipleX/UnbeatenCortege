@@ -108,6 +108,8 @@ float 	AEnemySoldier::TakeDamage
 
 	heroHealth -= DamageAmount;
 
+	OnEnemyHit.Broadcast();
+
 	if (m_animator->hitMontage)
 	{
 		m_animator->Montage_JumpToSection(FName("Default"), m_animator->hitMontage);
@@ -141,7 +143,6 @@ float 	AEnemySoldier::TakeDamage
 	}
 
 	
-	OnEnemyHit.Broadcast();
 
 	return Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
 }

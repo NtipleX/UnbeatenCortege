@@ -38,6 +38,9 @@ private:
 	UPROPERTY(EditDefaultsOnly)
 	class UParticleSystem* SmokePump;
 
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<AActor> bricksEffect;
+
 	float m_health;
 
 };

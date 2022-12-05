@@ -82,7 +82,8 @@ void AnxProjectile::projectileHit(UPrimitiveComponent* OverlappedComponent, AAct
 		else
 			UGameplayStatics::SpawnSound2D(GetWorld(), SoundNormalHit3);
 		OtherActor->TakeDamage(damage, FDamageEvent(), UGameplayStatics::GetPlayerController(GetWorld(), 0), this);
-		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), explosion, GetActorLocation());
+		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), explosion, GetActorLocation(), GetActorRotation(), FVector(0.75, 0.75, 0.75));
+		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), explosionBrick, GetActorLocation(), GetActorRotation(), FVector(0.65, 0.65, 0.65));
 		projMesh->SetHiddenInGame(true, true);
 		projMesh->SetVisibility(false, false);
 		projParticle->DeactivateSystem();

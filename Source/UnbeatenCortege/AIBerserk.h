@@ -3,6 +3,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "GenericTeamAgentInterface.h"
+#include "EnemySoldier.h"
 #include "AIBerserk.generated.h"
 
 UCLASS()
@@ -38,6 +39,8 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void stab();
 
+	UPROPERTY(BlueprintAssignable)
+	FOnEnemyHit OnEnemyHit;
 
 public:
 	virtual void BeginPlay() override;

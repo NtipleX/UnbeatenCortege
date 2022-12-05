@@ -53,6 +53,8 @@ float AAIBerserk::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent
 	else
 		return 0.f;
 
+	OnEnemyHit.Broadcast();
+
 	if (Health <= 0)
 	{
 		HealthBar->SetVisibility(false, false);
