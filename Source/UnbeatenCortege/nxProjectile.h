@@ -42,6 +42,8 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = nx)
 	class UParticleSystem* explosion; 
 	UPROPERTY(EditDefaultsOnly, Category = nx)
+	class UParticleSystem* explosionBrick; 
+	UPROPERTY(EditDefaultsOnly, Category = nx)
 	float damage;
 
 private:

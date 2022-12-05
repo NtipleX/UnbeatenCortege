@@ -49,6 +49,11 @@ void UWall::GetDamage()
 {
 	if (!--m_health)
 	{
+		FVector loc = GetComponentLocation();
+		loc.Z += 7;
+		loc.X += 6;
+		loc.Y += 6;
+		GetWorld()->SpawnActor<AActor>(bricksEffect.Get(), loc, FRotator(0, 90, 0), FActorSpawnParameters());
 		UGameplayStatics::PlaySound2D(GetWorld(), destroySound);
 		SetHiddenInGame(true);
 		wallBox->SetHiddenInGame(true);
