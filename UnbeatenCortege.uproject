@@ -16,17 +16,17 @@
 	"Plugins": [
 		{
 			"Name": "FlatNodes",
-			"Enabled": true,
+			"Enabled": false,
 			"MarketplaceURL": "com.epicgames.launcher://ue/marketplace/content/b719437f3fb54c259b34227363df8cab"
 		},
 		{
 			"Name": "RestartEditor",
-			"Enabled": true,
+			"Enabled": false,
 			"MarketplaceURL": "com.epicgames.launcher://ue/marketplace/product/a00eb1e478ae4a8fb655aa22f9125b07"
 		},
 		{
 			"Name": "EditorUIScale",
-			"Enabled": true,
+			"Enabled": false,
 			"MarketplaceURL": "com.epicgames.launcher://ue/marketplace/product/aeba519716514f9bb4a2d06603dbb408"
 		}
 	]

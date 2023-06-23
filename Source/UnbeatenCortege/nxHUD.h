@@ -6,12 +6,16 @@
 #include "GameFramework/HUD.h"
 #include "nxHUD.generated.h"
 
-/**
- * 
- */
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FConsumeLife);
+
 UCLASS()
 class UNBEATENCORTEGE_API AnxHUD : public AHUD
 {
 	GENERATED_BODY()
+		
+public:
 	
+	UPROPERTY(BlueprintAssignable)
+	FConsumeLife OnConsumeLife;
+
 };
