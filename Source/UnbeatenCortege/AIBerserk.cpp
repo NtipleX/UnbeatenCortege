@@ -6,6 +6,8 @@
 #include "AIController.h"
 #include "AITypes.h"
 #include "Components/CapsuleComponent.h"
+#include "nxHUD.h"
+#include "Kismet/GameplayStatics.h"
 
 
 AAIBerserk::AAIBerserk(): Health(50.f), m_sinkCounter(0)
@@ -65,6 +67,8 @@ float AAIBerserk::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent
 		GetMesh()->GetAnimInstance()->Montage_JumpToSection(FName("MySection"), dieMontage);
 		GetMesh()->GetAnimInstance()->Montage_Play(dieMontage);
 		GetWorldTimerManager().SetTimer(m_sinkingDeath, this, &AAIBerserk::sinkBody, 3, false, 3);
+		auto hud = dynamic_cast<AnxHUD*>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());
+		hud->OnAwardCoins.Broadcast(2);
 	}
 	
 	return 0.f;
