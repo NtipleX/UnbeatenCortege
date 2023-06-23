@@ -7,6 +7,7 @@
 #include "nxHUD.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FConsumeLife);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FAwardCoins, int, CoinsAward);
 
 UCLASS()
 class UNBEATENCORTEGE_API AnxHUD : public AHUD
@@ -17,5 +18,8 @@ public:
 	
 	UPROPERTY(BlueprintAssignable)
 	FConsumeLife OnConsumeLife;
+
+	UPROPERTY(BlueprintAssignable, VisibleAnywhere)
+	FAwardCoins OnAwardCoins;
 
 };

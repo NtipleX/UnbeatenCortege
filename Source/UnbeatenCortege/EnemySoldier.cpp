@@ -6,6 +6,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "Sound/SoundCue.h"
 #include "Components/CapsuleComponent.h"
+#include "nxHUD.h"
 
 AEnemySoldier::AEnemySoldier() : heroHealth(100.f), m_lastTimeShot(0.f), canShoot(true), m_sinkCounter(0)
 {
@@ -140,6 +141,8 @@ float 	AEnemySoldier::TakeDamage
 		CON->StopMovement();
 		CON->UnPossess();
 		CON->Destroy();
+		auto hud = dynamic_cast<AnxHUD*>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());
+		hud->OnAwardCoins.Broadcast(3);
 	}
 
 	
