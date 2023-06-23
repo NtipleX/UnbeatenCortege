@@ -24,6 +24,10 @@ public:
 	UFUNCTION(BlueprintCallable)
 	float getHeroHealth() const;
 
+	/* @brief getHeroHealth - sets hero health */
+	UFUNCTION(BlueprintCallable)
+	void setHeroHealth(float health);
+
 	int xLook;
 	int yLook;
 	bool isEnemy;

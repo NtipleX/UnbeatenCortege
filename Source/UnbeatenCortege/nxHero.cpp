@@ -7,6 +7,7 @@
 #include "nxAnimator.h"
 #include "Kismet/GameplayStatics.h"
 #include "nxGameMode.h"
+#include "nxHUD.h"
 
 AnxHero::AnxHero()
 	: m_gun(nullptr)
@@ -84,13 +85,12 @@ float AnxHero::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, A
 
 	if (heroHealth <= 0)
 	{
-		heroAlive = false;
-		//Destroying
-		/*if (m_gun)
-			m_gun->Destroy();
-		Destroy();*/
+		//! heroAlive = false;
 		auto gm = dynamic_cast<AnxGameMode*>(UGameplayStatics::GetGameMode(GetWorld()));
-		gm->GameOverEvent();
+		auto hud = dynamic_cast<AnxHUD*>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());
+		hud->OnConsumeLife.Broadcast();
+		//gm->GameOverEvent();
+
 	}
 
 	if (heroHealth <= 90)
@@ -138,6 +138,11 @@ void AnxHero::fireWeapon(FVector pointOnMap)
 float AnxHero::getHeroHealth() const
 {
 	return heroHealth;
+}
+
+void AnxHero::setHeroHealth(float heatlh)
+{
+	heroHealth = heatlh;
 }
 
 FGenericTeamId AnxHero::GetGenericTeamId() const
