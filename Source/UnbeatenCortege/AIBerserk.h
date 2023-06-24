@@ -42,6 +42,9 @@ public:
 	UPROPERTY(BlueprintAssignable)
 	FOnEnemyHit OnEnemyHit;
 
+	UPROPERTY(BlueprintAssignable)
+	FOnEnemyHit OnSoldierDead;
+
 public:
 	virtual void BeginPlay() override;
 	virtual void Tick(float delta) override;

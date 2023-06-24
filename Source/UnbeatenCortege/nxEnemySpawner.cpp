@@ -8,7 +8,7 @@
 #include "nxGameMode.h"
 
 // Sets default values
-AnxEnemySpawner::AnxEnemySpawner() : m_index(0), currentWaveEnemyCounter(0)
+AnxEnemySpawner::AnxEnemySpawner() : m_index(0), currentWaveEnemyCounter(0), shouldSpawn(true)
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
@@ -40,6 +40,8 @@ void AnxEnemySpawner::Tick(float DeltaTime)
 
 void AnxEnemySpawner::spawnCortege()
 {
+	if (!shouldSpawn)	return;
+
 	/* Enemy wave spawner
 	* After each wave has spawned - we wait untill every enemy unit is being destroyed;
 	* If we encounter number less then -1 - we gonna wait for the time equals waves[0]*(-1);

@@ -73,6 +73,9 @@ public:	// properties
 	UPROPERTY(BlueprintReadWrite)
 	bool m_isDead;
 
+	UPROPERTY(BlueprintAssignable)
+	FOnEnemyHit OnSoldierDead;
+
 
 private:
 	UPROPERTY()
