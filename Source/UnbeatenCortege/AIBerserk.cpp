@@ -69,6 +69,7 @@ float AAIBerserk::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent
 		GetWorldTimerManager().SetTimer(m_sinkingDeath, this, &AAIBerserk::sinkBody, 3, false, 3);
 		auto hud = dynamic_cast<AnxHUD*>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());
 		hud->OnAwardCoins.Broadcast(2);
+		OnSoldierDead.Broadcast();
 	}
 	
 	return 0.f;

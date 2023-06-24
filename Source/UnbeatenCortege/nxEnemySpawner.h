@@ -26,6 +26,9 @@ public:
 	UPROPERTY(EditAnywhere)
 	TArray<int> waves;
 
+	UPROPERTY(BlueprintReadWrite)
+	bool shouldSpawn;
+
 	
 public:	
 	AnxEnemySpawner();

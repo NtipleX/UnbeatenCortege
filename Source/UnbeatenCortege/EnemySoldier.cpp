@@ -143,6 +143,7 @@ float 	AEnemySoldier::TakeDamage
 		CON->Destroy();
 		auto hud = dynamic_cast<AnxHUD*>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());
 		hud->OnAwardCoins.Broadcast(3);
+		OnSoldierDead.Broadcast();
 	}
 
 	
