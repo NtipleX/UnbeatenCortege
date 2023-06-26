@@ -19,16 +19,25 @@ void AnxPController::BeginPlay()
 		SetViewTarget(CameraActor);
 	else TRACE_WARNING(LogTemp, "Static actor camera not found on the scene");
 	*/
-	
-	/// Mouse cursor crosshair
-	//MakeMouseCrosshair();
 
 	m_soldier = Cast<AnxHero>(GetPawn());
-	m_soldier->isEnemy = false;
+	if (m_soldier)
+		m_soldier->isEnemy = false;
+
+	/// Mouse cursor crosshair
+	MakeMouseCursor();
 }
 
 void AnxPController::Tick(float delta)
 {
+	if (!m_soldier->IsValidLowLevel())
+	{
+		m_soldier = Cast<AnxHero>(GetPawn());
+		if(m_soldier)
+			m_soldier->isEnemy = false;
+		return;
+	}
+
 	if (m_firing)
 	{
 		proceedFire();
@@ -111,9 +120,16 @@ void AnxPController::proceedFire()
 void AnxPController::MakeMouseCrosshair()
 {
 	SetShowMouseCursor(true);
-	UUserWidget* crosshair = CreateWidget(this, CursorWidget, FName("CrosshairWidget"));
-	if (crosshair)
-		SetMouseCursorWidget(EMouseCursor::Default, crosshair);
-	else TRACE_WARNING(LogTemp, "Crosshair hasn\'t been choosed in controller");
+	if (!m_crosshair)
+		m_crosshair = CreateWidget(this, CursorWidget, FName("CrosshairWidget"));
+	SetMouseCursorWidget(EMouseCursor::Default, m_crosshair);
 	bEnableClickEvents = true;
+}
+
+void AnxPController::MakeMouseCursor()
+{
+	SetShowMouseCursor(true);
+	if(!m_cursor || !m_cursor->IsValidLowLevel())
+		m_cursor = CreateWidget(this, CrossWidget, FName("CursorWidget"));
+	SetMouseCursorWidget(EMouseCursor::Default, m_cursor);
 }
