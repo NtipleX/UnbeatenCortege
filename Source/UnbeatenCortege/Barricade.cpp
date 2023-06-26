@@ -49,7 +49,7 @@ void ABarricade::Tick(float DeltaTime)
 float ABarricade::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
 {
 
-	if (block1->GetHealth() + block2->GetHealth() + block3->GetHealth() + block4->GetHealth() <= 2)
+	if (block1->GetHealth() + block2->GetHealth() + block3->GetHealth() + block4->GetHealth() <= 100)
 	{
 		Destroy();
 		return 0;
@@ -57,7 +57,7 @@ float ABarricade::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent
 	
 	if (!m_isDamaged)
 	{
-		if(!block1->GetHealth() || !block2->GetHealth() || !block3->GetHealth() || !block4->GetHealth())
+		if(block1->GetHealth()<=0 || block2->GetHealth() <= 0 || block3->GetHealth() <= 0 || block4->GetHealth() <= 0)
 		{
 			m_debris = GetWorld()->SpawnActor<AActor>(debris, GetActorLocation(), FRotator(0,0,0));
 			m_isDamaged = true;

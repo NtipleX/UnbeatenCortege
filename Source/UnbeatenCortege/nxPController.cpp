@@ -120,16 +120,29 @@ void AnxPController::proceedFire()
 void AnxPController::MakeMouseCrosshair()
 {
 	SetShowMouseCursor(true);
-	if (!m_crosshair)
-		m_crosshair = CreateWidget(this, CursorWidget, FName("CrosshairWidget"));
-	SetMouseCursorWidget(EMouseCursor::Default, m_crosshair);
 	bEnableClickEvents = true;
+	if (m_crosshair)
+	{
+		if (m_crosshair->IsValidLowLevel()) {
+			SetMouseCursorWidget(EMouseCursor::Default, m_crosshair);
+			return;
+		}
+	}
+	m_crosshair = CreateWidget(this, CursorWidget, FName("CrosshairWidget"));
+	MakeMouseCrosshair();
 }
 
 void AnxPController::MakeMouseCursor()
 {
 	SetShowMouseCursor(true);
-	if(!m_cursor || !m_cursor->IsValidLowLevel())
-		m_cursor = CreateWidget(this, CrossWidget, FName("CursorWidget"));
-	SetMouseCursorWidget(EMouseCursor::Default, m_cursor);
+	if (m_cursor)
+	{
+		if (m_cursor->IsValidLowLevel())
+		{
+			SetMouseCursorWidget(EMouseCursor::Default, m_cursor);
+			return;
+		}
+	}
+	m_cursor = CreateWidget(this, CrossWidget, FName("CursorWidget"));
+	MakeMouseCursor();
 }

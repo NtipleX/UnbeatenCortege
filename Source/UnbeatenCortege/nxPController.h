@@ -42,7 +42,9 @@ private:
 	/// Misc
 	class AnxHero* m_soldier;
 	bool m_firing;
+	UPROPERTY()
 	UUserWidget* m_crosshair;
+	UPROPERTY()
 	UUserWidget* m_cursor;
 
 };
