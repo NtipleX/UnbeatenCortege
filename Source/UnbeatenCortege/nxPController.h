@@ -12,6 +12,9 @@ class UNBEATENCORTEGE_API AnxPController : public APlayerController
 public:
 	AnxPController();
 
+	UFUNCTION(BlueprintCallable)
+	void MakeMouseCrosshair();
+
 protected:
 	// Setting up configuration for the game
 	virtual void BeginPlay() override;
