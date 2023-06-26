@@ -7,7 +7,7 @@
 #include "Particles/ParticleSystem.h"
 
 // Sets default values
-UWall::UWall() : m_health(2.f)
+UWall::UWall() : m_health(100.f)
 {
 	/*wallMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("wallMeshComp"));
 	RootComponent = wallMesh;
@@ -45,9 +45,10 @@ UWall::UWall() : m_health(2.f)
 }
 */
 
-void UWall::GetDamage()
+void UWall::GetDamage(float damage)
 {
-	if (!--m_health)
+	m_health -= damage*1.5;
+	if (m_health<=0)
 	{
 		FVector loc = GetComponentLocation();
 		loc.Z += 7;
@@ -64,7 +65,7 @@ void UWall::GetDamage()
 	{
 		//SetMaterial(0, darkenMaterial);
 		if(Cast<UMaterialInstanceDynamic>(GetMaterial(0)))
-			Cast<UMaterialInstanceDynamic>(GetMaterial(0))->SetScalarParameterValue(FName("Health"), 0.5f);
+			Cast<UMaterialInstanceDynamic>(GetMaterial(0))->SetScalarParameterValue(FName("Health"), FMath::Clamp<float>(m_health/100.f, 0.3f, 1.f));
 		else
 			cLog("its not mateialInstanceDynamic..");
 		

@@ -41,7 +41,7 @@ void AnxEnemySpawner::Tick(float DeltaTime)
 void AnxEnemySpawner::spawnCortege()
 {
 	if (!shouldSpawn)	return;
-
+	bool execute = true;
 	/* Enemy wave spawner
 	* After each wave has spawned - we wait untill every enemy unit is being destroyed;
 	* If we encounter number less then -1 - we gonna wait for the time equals waves[0]*(-1);
@@ -102,27 +102,45 @@ void AnxEnemySpawner::spawnCortege()
 					break;
 				}
 			}
-			if (flag)
+			if (flag) {
 				GetWorldTimerManager().SetTimer(respawnKD, this, &AnxEnemySpawner::spawnCortege, 0.5f, false, 0.5f);
-			else
-				dynamic_cast<AnxGameMode*>(UGameplayStatics::GetGameMode(GetWorld()))->GameWinEvent();
-			return;
+			}
+			else {
+				auto gameMode = UGameplayStatics::GetGameMode(GetWorld());
+				if (!gameMode)
+				{
+					GEngine->AddOnScreenDebugMessage(0, 10, FColor::Red, FString("No game mode!"));
+					return;
+				}
+				auto gameModeMy = dynamic_cast<AnxGameMode*>(gameMode);
+				if (!gameModeMy)
+				{
+					GEngine->AddOnScreenDebugMessage(0, 10, FColor::Red, FString("No game mode NX!"));
+					return;
+				}
+				gameModeMy->GameWinEvent();
+			}
+			execute = false;
 		}
 	}
+	if (execute) {
 
-	if (!tunnels.IsValidIndex(m_index))
-		m_index = 0;
+		if (!tunnels.IsValidIndex(m_index))
+			m_index = 0;
 
-	TSubclassOf<ACharacter> unitClass;
-	if(!corteges.Dequeue(unitClass))
-	{
-		GEngine->AddOnScreenDebugMessage(0, 2, FColor::Cyan, FString("No corteges remain"));
-		return;
+		TSubclassOf<ACharacter> unitClass;
+		if (!corteges.Dequeue(unitClass))
+		{
+			GEngine->AddOnScreenDebugMessage(0, 2, FColor::Cyan, FString("No corteges remain"));
+		}
+		else
+		{
+			AActor* spawned = tunnels[m_index++]->spawnUnit(unitClass);
+			auto es = Cast<AEnemySoldier>(spawned);
+			if (es)
+				spawnedEnemySoldiers.Add(es);
+			--currentWaveEnemyCounter;
+			GetWorldTimerManager().SetTimer(respawnKD, this, &AnxEnemySpawner::spawnCortege, 1.0f, false, 1.0f);
+		}
 	}
-	AActor* spawned = tunnels[m_index++]->spawnUnit(unitClass);
-	auto es = Cast<AEnemySoldier>(spawned);
-	if(es)
-		spawnedEnemySoldiers.Add(es);
-	--currentWaveEnemyCounter;
-	GetWorldTimerManager().SetTimer(respawnKD, this, &AnxEnemySpawner::spawnCortege, 1.0f, false, 1.0f);
 }

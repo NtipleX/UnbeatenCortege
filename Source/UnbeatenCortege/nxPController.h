@@ -14,6 +14,8 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void MakeMouseCrosshair();
+	UFUNCTION(BlueprintCallable)
+	void MakeMouseCursor();
 
 protected:
 	// Setting up configuration for the game
@@ -31,11 +33,18 @@ private:
 	class ACameraActor* CameraActor;
 
 	/** CursorWidget - Crosshair widget */
-	UPROPERTY(EditDefaultsOnly, Category = nx, meta = (AllowPrivateAccess = "true"));
+	UPROPERTY(EditDefaultsOnly, Category = nx, meta = (AllowPrivateAccess = "true"))
 	TSubclassOf<class UUserWidget> CursorWidget;
+
+	UPROPERTY(EditDefaultsOnly, Category = nx, meta = (AllowPrivateAccess = "true"))
+	TSubclassOf<UUserWidget> CrossWidget;
 
 	/// Misc
 	class AnxHero* m_soldier;
 	bool m_firing;
+	UPROPERTY()
+	UUserWidget* m_crosshair;
+	UPROPERTY()
+	UUserWidget* m_cursor;
 
 };

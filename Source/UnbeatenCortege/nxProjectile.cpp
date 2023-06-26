@@ -77,7 +77,7 @@ void AnxProjectile::projectileHit(UPrimitiveComponent* OverlappedComponent, AAct
 		if (Cast<UWall>(OtherComp))
 		{
 			OtherActor->TakeDamage(damage, FDamageEvent(), UGameplayStatics::GetPlayerController(GetWorld(), 0), this);
-			Cast<UWall>(OtherComp)->GetDamage();
+			Cast<UWall>(OtherComp)->GetDamage(damage);
 		}
 		else
 			UGameplayStatics::SpawnSound2D(GetWorld(), SoundNormalHit3);
