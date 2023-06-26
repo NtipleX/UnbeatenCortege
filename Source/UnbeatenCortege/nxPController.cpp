@@ -15,17 +15,13 @@ void AnxPController::BeginPlay()
 {
 	/// Sets camera view to level's camera
 	CameraActor = Cast<ACameraActor>(UGameplayStatics::GetActorOfClass(GetWorld(), ACameraActor::StaticClass()));
-	if (CameraActor)
+	/*if (CameraActor)
 		SetViewTarget(CameraActor);
 	else TRACE_WARNING(LogTemp, "Static actor camera not found on the scene");
+	*/
 	
 	/// Mouse cursor crosshair
-	SetShowMouseCursor(true);
-	UUserWidget* crosshair = CreateWidget(this, CursorWidget, FName("CrosshairWidget"));
-	if (crosshair)
-		SetMouseCursorWidget(EMouseCursor::Default, crosshair);
-	else TRACE_WARNING(LogTemp, "Crosshair hasn\'t been choosed in controller");
-	bEnableClickEvents = true;
+	//MakeMouseCrosshair();
 
 	m_soldier = Cast<AnxHero>(GetPawn());
 	m_soldier->isEnemy = false;
@@ -110,4 +106,14 @@ void AnxPController::proceedFire()
 			m_soldier->fireWeapon(hit.ImpactPoint);
 		}
 	}
+}
+
+void AnxPController::MakeMouseCrosshair()
+{
+	SetShowMouseCursor(true);
+	UUserWidget* crosshair = CreateWidget(this, CursorWidget, FName("CrosshairWidget"));
+	if (crosshair)
+		SetMouseCursorWidget(EMouseCursor::Default, crosshair);
+	else TRACE_WARNING(LogTemp, "Crosshair hasn\'t been choosed in controller");
+	bEnableClickEvents = true;
 }
