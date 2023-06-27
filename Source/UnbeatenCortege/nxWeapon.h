@@ -5,6 +5,13 @@
 #include "TimerManager.h"
 #include "nxWeapon.generated.h"
 
+UENUM(BlueprintType)
+enum class EWeaponType: uint8
+{
+	Pistol UMETA(DisplayName="Pistoll"),
+	SMG
+};
+
 UCLASS()
 class UNBEATENCORTEGE_API AnxWeapon : public AActor
 {
@@ -29,6 +36,9 @@ public:
 	// Weapon spread
 	UPROPERTY(EditDefaultsOnly, Category = nx)
 	float MaxSpread;
+
+	UPROPERTY(EditDefaultsOnly)
+	EWeaponType WeaponType;
 
 
 protected:

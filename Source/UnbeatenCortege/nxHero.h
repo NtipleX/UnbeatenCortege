@@ -28,9 +28,14 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void setHeroHealth(float health);
 
+	UFUNCTION(BlueprintCallable)
+	void equipWeapon(TSubclassOf<class AnxWeapon> weapon);
+
 	int xLook;
 	int yLook;
 	bool isEnemy;
+	UPROPERTY(BlueprintReadWrite, Category = nx, meta = (AllowPrivateAccess = true))
+	bool canShoot;
 
 protected:
 	virtual void BeginPlay() override;
@@ -67,10 +72,8 @@ private:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = nx, meta = (AllowPrivateAccess = true))
 	float heroAlive;
 
-	UPROPERTY(BlueprintReadWrite, Category = nx, meta = (AllowPrivateAccess = true))
-	bool canShoot;
-
 	class UnxAnimator* m_animator;
+	FTimerHandle m_healthBarInfo;
 
 	
 };
