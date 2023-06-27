@@ -93,8 +93,17 @@ float AnxHero::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, A
 
 	}
 
-	if (heroHealth <= 90)
+	if (heroHealth <= 120)
+	{
 		heroHealthbar->SetVisibility(true, true);
+		FTimerDelegate TD;
+		TD.BindLambda(
+			[&] {
+				heroHealthbar->SetVisibility(false, false);
+			}
+		);
+		GetWorldTimerManager().SetTimer(m_healthBarInfo, TD, 2.f, false, 2.f);
+	}
 	else heroHealthbar->SetVisibility(false, false);
 
 	return Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
@@ -148,4 +157,26 @@ void AnxHero::setHeroHealth(float heatlh)
 FGenericTeamId AnxHero::GetGenericTeamId() const
 {
 	return FGenericTeamId(1);
+}
+
+void AnxHero::equipWeapon(TSubclassOf<class AnxWeapon> weapon)
+{
+	if (m_gun)
+	{
+		m_gun->SetHidden(true);
+		m_gun->Destroy();
+	}
+	{
+		FAttachmentTransformRules transformRules(
+			EAttachmentRule::SnapToTarget,
+			EAttachmentRule::SnapToTarget,
+			EAttachmentRule::KeepRelative,
+			true
+		);
+
+		m_gun = GetWorld()->SpawnActor<AnxWeapon>(weapon, FTransform());
+		if (m_gun)
+			m_gun->AttachToComponent(GetMesh(), transformRules, FName("SKT_Pistol"));
+		else TRACE_WARNING(LogTemp, "Failed to spawn starting gun");
+	}
 }
