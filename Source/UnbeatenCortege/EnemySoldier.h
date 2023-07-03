@@ -76,6 +76,12 @@ public:	// properties
 	UPROPERTY(BlueprintAssignable)
 	FOnEnemyHit OnSoldierDead;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	bool canBeStunned;
+
+	UPROPERTY(BlueprintReadWrite)
+	EThrowableType throwingType;
+
 
 private:
 	UPROPERTY()

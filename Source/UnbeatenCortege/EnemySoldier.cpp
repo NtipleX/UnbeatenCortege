@@ -8,7 +8,7 @@
 #include "Components/CapsuleComponent.h"
 #include "nxHUD.h"
 
-AEnemySoldier::AEnemySoldier() : heroHealth(100.f), m_lastTimeShot(0.f), canShoot(true), m_sinkCounter(0)
+AEnemySoldier::AEnemySoldier() : heroHealth(100.f), m_lastTimeShot(0.f), canShoot(true), m_sinkCounter(0), canBeStunned(true)
 {
 	PrimaryActorTick.bCanEverTick = true;
 	offensivity.Level = 1;
@@ -111,13 +111,13 @@ float 	AEnemySoldier::TakeDamage
 
 	OnEnemyHit.Broadcast();
 
-	if (m_animator->hitMontage)
+	if (m_animator->hitMontage && canBeStunned)
 	{
 		m_animator->Montage_JumpToSection(FName("Default"), m_animator->hitMontage);
 		m_animator->Montage_Play(m_animator->hitMontage);
 	}
 
-	if (heroHealth <= 90)
+	if (heroHealth <= 120)
 		heroHealthbar->SetVisibility(true, true);
 
 	if (heroHealth <= 0)
