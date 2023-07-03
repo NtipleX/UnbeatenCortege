@@ -19,6 +19,9 @@ public:
 	UPROPERTY(EditDefaultsOnly)
 	UAnimMontage* fireGun;
 
+	UPROPERTY(EditDefaultsOnly)
+	UAnimMontage* fireARGun;
+
 	UnxAnimator();
 
 protected:

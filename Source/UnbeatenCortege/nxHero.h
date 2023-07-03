@@ -31,6 +31,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void equipWeapon(TSubclassOf<class AnxWeapon> weapon);
 
+	UFUNCTION(BlueprintPure)
+	EWeaponType getWeaponType();
+
 	int xLook;
 	int yLook;
 	bool isEnemy;

@@ -9,7 +9,8 @@ UENUM(BlueprintType)
 enum class EWeaponType: uint8
 {
 	Pistol UMETA(DisplayName="Pistoll"),
-	SMG
+	SMG,
+	AssaultRifle
 };
 
 UENUM(BlueprintType)

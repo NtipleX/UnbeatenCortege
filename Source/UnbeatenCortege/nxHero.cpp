@@ -137,10 +137,26 @@ void AnxHero::fireWeapon(FVector pointOnMap)
 	{
 		fire = m_gun->fireWeapon(vectorDirection, GetActorLocation());
 	}
+	if (fire)
+	{
+		switch (getWeaponType())
+		{
+		case EWeaponType::Pistol:
+		case EWeaponType::SMG:
+		{
+			m_animator->Montage_JumpToSection(FName("MySection"), m_animator->fireGun);
+			m_animator->Montage_Play(m_animator->fireGun);
+			break;
+		}
+		case EWeaponType::AssaultRifle:
+		{
+			m_animator->Montage_Play(m_animator->fireARGun);
+			break;
+		}
+		}
+	}
 	if (fire && m_animator->fireGun)
 	{
-		m_animator->Montage_JumpToSection(FName("MySection"), m_animator->fireGun);
-		m_animator->Montage_Play(m_animator->fireGun);
 	}
 }
 
@@ -176,7 +192,30 @@ void AnxHero::equipWeapon(TSubclassOf<class AnxWeapon> weapon)
 
 		m_gun = GetWorld()->SpawnActor<AnxWeapon>(weapon, FTransform());
 		if (m_gun)
-			m_gun->AttachToComponent(GetMesh(), transformRules, FName("SKT_Pistol"));
+		{
+			switch (getWeaponType())
+			{
+			case EWeaponType::Pistol:
+			case EWeaponType::SMG:
+			{
+				m_gun->AttachToComponent(GetMesh(), transformRules, FName("SKT_Pistol")); 
+				break;
+			}
+			case EWeaponType::AssaultRifle:
+			{
+				m_gun->AttachToComponent(GetMesh(), transformRules, FName("SKT_Gun"));
+				break;
+			}
+			}
+		}
 		else TRACE_WARNING(LogTemp, "Failed to spawn starting gun");
 	}
+}
+
+EWeaponType AnxHero::getWeaponType()
+{
+	if (m_gun)
+		return m_gun->WeaponType;
+	else
+		return EWeaponType::Pistol;
 }
