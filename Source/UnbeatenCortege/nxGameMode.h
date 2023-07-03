@@ -4,6 +4,8 @@
 #include "GameFramework/GameModeBase.h"
 #include "nxGameMode.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FGameStarted);
+
 UCLASS()
 class UNBEATENCORTEGE_API AnxGameMode : public AGameModeBase
 {
@@ -24,5 +26,11 @@ public:
 	void GameWinEvent();
 
 	virtual void StartPlay() override;
+
+	UPROPERTY(BlueprintAssignable, VisibleAnywhere)
+	FGameStarted OnGameStarted;
+
+	UFUNCTION(BlueprintCallable)
+	void BroadcastGameStarted();
 
 };

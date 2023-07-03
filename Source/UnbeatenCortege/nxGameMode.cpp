@@ -12,3 +12,7 @@ void AnxGameMode::StartPlay()
 	stab->destroyed.AddDynamic(this, &AnxGameMode::GameOverEvent);
 }
 
+void AnxGameMode::BroadcastGameStarted()
+{
+	OnGameStarted.Broadcast();
+}

@@ -6,6 +6,8 @@
 #include "Kismet/GameplayStatics.h"
 #include "Particles/ParticleSystem.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "nxPController.h"
+#include "nxGameMode.h"
 
 AnxWeapon::AnxWeapon() : reloadTime(1.f)
 {
@@ -24,6 +26,8 @@ AnxWeapon::AnxWeapon() : reloadTime(1.f)
 void AnxWeapon::BeginPlay()
 {
 	Super::BeginPlay();
+	auto GM = dynamic_cast<AnxGameMode*>(UGameplayStatics::GetGameMode(GetWorld()));
+	GM->OnGameStarted.AddDynamic(this, &AnxWeapon::OnGameStarted);
 	
 }
 
@@ -58,4 +62,13 @@ bool AnxWeapon::fireWeapon(FVector direction, FVector startPos)
 	else TRACE_WARNING(LogTemp, "Projectile for weapon not set");
 
 	return true;
+}
+
+void AnxWeapon::OnGameStarted()
+{
+	auto con = dynamic_cast<AnxPController*>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
+	if (con && con->AdaptiveCompressor)
+	{
+		reloadTime *= 0.8;
+	}
 }

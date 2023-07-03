@@ -36,7 +36,7 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category = nx)
 	class UParticleSystem* ParticleFire;
 
-	UPROPERTY(EditDefaultsOnly, Category = nx)
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = nx)
 	float reloadTime;
 
 	// Weapon spread
@@ -49,6 +49,8 @@ public:
 	UPROPERTY(EditDefaultsOnly)
 	EWeaponType WeaponType;
 
+	UFUNCTION()
+	void OnGameStarted();
 
 protected:
 	virtual void BeginPlay() override;
