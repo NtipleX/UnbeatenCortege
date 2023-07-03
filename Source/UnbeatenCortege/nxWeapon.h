@@ -12,6 +12,14 @@ enum class EWeaponType: uint8
 	SMG
 };
 
+UENUM(BlueprintType)
+enum class EThrowableType : uint8
+{
+	Smoke,
+	Grenade,
+	Molotov
+};
+
 UCLASS()
 class UNBEATENCORTEGE_API AnxWeapon : public AActor
 {
