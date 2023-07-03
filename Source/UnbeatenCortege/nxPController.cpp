@@ -5,6 +5,7 @@
 #include "Blueprint/UserWidget.h"
 #include "GameFramework/PlayerInput.h"
 #include "nxHero.h"
+#include "nxGameMode.h"
 
 AnxPController::AnxPController() : m_firing(false)
 {
@@ -26,6 +27,9 @@ void AnxPController::BeginPlay()
 
 	/// Mouse cursor crosshair
 	MakeMouseCursor();
+
+	auto GM = dynamic_cast<AnxGameMode*>(UGameplayStatics::GetGameMode(GetWorld()));
+	GM->OnGameStarted.AddDynamic(this, &AnxPController::OnGameStarted);
 }
 
 void AnxPController::Tick(float delta)
@@ -145,4 +149,9 @@ void AnxPController::MakeMouseCursor()
 	}
 	m_cursor = CreateWidget(this, CrossWidget, FName("CursorWidget"));
 	MakeMouseCursor();
+}
+
+void AnxPController::OnGameStarted()
+{
+
 }

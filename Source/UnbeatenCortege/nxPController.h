@@ -17,6 +17,12 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void MakeMouseCursor();
 
+	UFUNCTION()
+	void OnGameStarted();
+
+	UPROPERTY(BlueprintReadWrite)
+	bool AdaptiveCompressor = false;
+
 protected:
 	// Setting up configuration for the game
 	virtual void BeginPlay() override;
