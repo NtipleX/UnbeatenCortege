@@ -9,7 +9,7 @@
 #include "nxPController.h"
 #include "nxGameMode.h"
 
-AnxWeapon::AnxWeapon() : reloadTime(1.f)
+AnxWeapon::AnxWeapon() : reloadTime(1.f), m_ammoFired(0)
 {
 	weaponMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("weaponMeshComp"));
 	weaponMesh->SetupAttachment(RootComponent);
@@ -58,9 +58,18 @@ bool AnxWeapon::fireWeapon(FVector direction, FVector startPos)
 
 		rot.Yaw += UKismetMathLibrary::RandomFloatInRange(MinSpread, MaxSpread);
 		auto pushed = GetWorld()->SpawnActor<AnxProjectile>(projectile, start, rot);
+		m_ammoFired++;
+		if (m_ammoFired >= 18 && AmmoMag)
+		{
+			m_ammoFired = 0;
+			GetWorld()->SpawnActor<AActor>(AmmoMag, GetActorLocation(), GetActorRotation());
+		}
+		if (FMath::RandBool())
+		{
+			GetWorld()->SpawnActor<AActor>(AmmoEmptis, GetActorLocation(), GetActorRotation());
+		}
 	}
 	else TRACE_WARNING(LogTemp, "Projectile for weapon not set");
-
 	return true;
 }
 
