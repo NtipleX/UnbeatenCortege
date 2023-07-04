@@ -49,6 +49,12 @@ public:
 	UPROPERTY(EditDefaultsOnly)
 	EWeaponType WeaponType;
 
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<AActor> AmmoMag;
+
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<AActor> AmmoEmptis;
+	
 	UFUNCTION()
 	void OnGameStarted();
 
@@ -65,5 +71,6 @@ private:
 	TSubclassOf<class AnxProjectile> projectile;
 
 	FTimerHandle m_timer_reload;
+	uint32 m_ammoFired;
 
 };
